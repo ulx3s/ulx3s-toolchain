@@ -25,6 +25,7 @@ chmod +x install_verilator.sh
 chmod +x install_yosys.sh
 chmod +x riscv-toolchain.sh
 chmod +x setup.sh
+chmod +x set_riscv_path.sh
 chmod +x template.sh
 chmod +x ulx3s_setup.sh
 chmod +x version.sh
