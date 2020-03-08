@@ -63,6 +63,9 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
+
+. $SAVED_CURRENT_PATH/set_riscv_path.sh
+
 ./make.py --board ULX3S
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
