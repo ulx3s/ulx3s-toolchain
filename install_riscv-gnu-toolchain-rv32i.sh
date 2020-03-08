@@ -6,7 +6,7 @@
 ./gitcheck.sh $0
 
 # initialize some environment variables and perform some sanity checks
-. ./init.sh TEST
+. ./init.sh
 
 # we don't want tee to capture exit codes
 set -o pipefail
@@ -24,21 +24,8 @@ sudo apt-get install autoconf automake autotools-dev curl libmpc-dev \
 sudo mkdir /opt/riscv32i
 sudo chown $USER /opt/riscv32i
 
-# add to path
-if [ "$(cat ~/.bashrc | grep  $THIS_RISCV_PATH)" == "" ]; then
-  echo PATH=$PATH:$THIS_RISCV_PATH >> ~/.bashrc
-  echo "~/.bashrc updated with this line:"
-  echo PATH=$PATH:$THIS_RISCV_PATH
-else
-  echo "Found $THIS_RISCV_PATH in ~/.bashrc - path not changed."
-fi
 
-if [ "$(echo $PATH | grep  $THIS_RISCV_PATH)" == "" ]; then
-  export PATH=$PATH:$THIS_RISCV_PATH
-  echo "Updated current path: $PATH"
-else
-  echo "Path not updated. PATH=$PATH"
-fi
+. $SAVED_CURRENT_PATH/set_riscv_path.sh
 
 echo "***************************************************************************************************"
 echo " riscv-gnu-toolchain-rv32i. Saving log to $THIS_LOG"
