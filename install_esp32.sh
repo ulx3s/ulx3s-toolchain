@@ -16,8 +16,11 @@ set -o pipefail
 # see https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html#get-started-get-esp-idf
 #"***************************************************************************************************"
 
-sudo apt-get install gawk gperf grep gettext python python-dev automake bison flex texinfo help2man libtool libtool-bin make --assume-yes   2>&1 | tee -a "$THIS_LOG"
-sudo apt-get install python-pip
+sudo apt-get install gawk gperf grep gettext python python-dev \
+     automake bison flex texinfo help2man libtool libtool-bin make --assume-yes   2>&1 | tee -a "$THIS_LOG"
+
+sudo apt-get install python-pip                                    --assume-yes   2>&1 | tee -a "$THIS_LOG"
+
 mkdir -p ~/esp
 cd ~/esp
 
@@ -39,16 +42,22 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-echo ""
-echo "checking out crosstool-NG esp-2019r2"
-echo ""
-git checkout esp-2019r2
-git submodule update --init
-./bootstrap && ./configure --enable-local && make
+echo ""                                                           2>&1 | tee -a "$THIS_LOG"
+echo "checking out crosstool-NG esp-2019r2"                       2>&1 | tee -a "$THIS_LOG"
+echo ""                                                           2>&1 | tee -a "$THIS_LOG"
+git checkout esp-2019r2                                           2>&1 | tee -a "$THIS_LOG"
+git submodule update --init                                       2>&1 | tee -a "$THIS_LOG"
+
+echo ""                                                           2>&1 | tee -a "$THIS_LOG"
+echo "ESP32 bootstrap and configure... "                          2>&1 | tee -a "$THIS_LOG"
+echo ""                                                           2>&1 | tee -a "$THIS_LOG"
+./bootstrap && ./configure --enable-local && make                 2>&1 | tee -a "$THIS_LOG"
 
 # Build the toolchain:
-./ct-ng xtensa-esp32-elf
-./ct-ng build
+echo Ready to build ESP32 toolchain... $(pwd)                     2>&1 | tee -a "$THIS_LOG"
+
+./ct-ng xtensa-esp32-elf                                          2>&1 | tee -a "$THIS_LOG"
+./ct-ng build                                                     2>&1 | tee -a "$THIS_LOG"
 chmod -R u+w builds/xtensa-esp32-elf
 
 cd $SAVED_CURRENT_PATH
@@ -71,11 +80,11 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-./install.sh
+./install.sh                                             
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 
 # needed in ~/.bashrc
-. $HOME/esp/esp-idf/export.sh
+. $HOME/esp/esp-idf/export.sh                                    2>&1 | tee -a "$THIS_LOG"
 
 echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
