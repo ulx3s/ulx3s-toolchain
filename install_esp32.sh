@@ -70,8 +70,6 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-cd $SAVED_CURRENT_PATH
-
 ./install.sh
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
