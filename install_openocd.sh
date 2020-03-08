@@ -6,7 +6,7 @@
 ./gitcheck.sh $0
 
 # initialize some environment variables and perform some sanity checks
-. ./init.sh TEST
+. ./init.sh
 
 # we don't want tee to capture exit codes
 set -o pipefail
@@ -16,7 +16,7 @@ set -o pipefail
 #"***************************************************************************************************"
 THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME"_openocd_"$LOG_SUFFIX".log"
 
-sudo apt install libtool automake pkg-config libusb-1.0-0-dev     2>&1 | tee -a "$THIS_LOG"
+sudo apt-get install libtool automake pkg-config libusb-1.0-0-dev  --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
 echo "***************************************************************************************************"
 echo " openocd. Saving log to $THIS_LOG"

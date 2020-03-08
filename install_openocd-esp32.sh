@@ -6,7 +6,7 @@
 ./gitcheck.sh $0
 
 # initialize some environment variables and perform some sanity checks
-. ./init.sh TEST
+. ./init.sh
 
 # we don't want tee to capture exit codes
 set -o pipefail
