@@ -47,11 +47,14 @@ chmod +x install_set_permissions.sh
 ./install_yosys.sh
 ./install_prjtrellis.sh
 ./install_nextpnr.sh
-./install_arachne-pnr.sh
 
 ./install_verilator.sh
 ./install_icestorm.sh
 ./install_litex.sh
+
+# not maintained anymore, but arachne-pnr needs icestorm
+./install_arachne-pnr.sh
+
 
 ./install_ujprog.sh
 ./install_blinky.sh
