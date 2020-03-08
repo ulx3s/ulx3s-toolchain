@@ -16,7 +16,8 @@ set -o pipefail
 # see https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html#get-started-get-esp-idf
 #"***************************************************************************************************"
 
-sudo apt-get install gawk gperf grep gettext python python-dev automake bison flex texinfo help2man libtool libtool-bin make
+sudo apt-get install gawk gperf grep gettext python python-dev automake bison flex texinfo help2man libtool libtool-bin make --assume-yes   2>&1 | tee -a "$THIS_LOG"
+sudo apt-get install python-pip
 mkdir -p ~/esp
 cd ~/esp
 
