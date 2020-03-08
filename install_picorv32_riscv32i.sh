@@ -12,9 +12,13 @@
 set -o pipefail
 
 #"***************************************************************************************************"
-# 
+# check for valid riscv32 compiler
 #"***************************************************************************************************"
 /opt/riscv32i/bin/riscv32-unknown-elf-gcc --version > /dev/null
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+
+
 # TODO if already installed, prompt user
 
 
