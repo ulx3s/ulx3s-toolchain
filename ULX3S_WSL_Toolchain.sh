@@ -158,16 +158,16 @@ CheckForGitFileChange() {
 	GIT_REL_PATH=$(dirname $1 | tr --delete '\t\r\n') 
 	GIT_FULL_PATH="$(cd "${GIT_REL_PATH}"; pwd)"
 	GIT_FILE_NAME=$(basename $1 | tr --delete '\t\r\n' )
-	echo "Checking"$GIT_FULL_PATH"/"$GIT_FILE_NAME
-
+	GIT_THIS_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 	cd $GIT_FULL_PATH
+
+	echo "Checking $GIT_FULL_PATH/$GIT_FILE_NAME on branch origin/$GIT_THIS_BRANCH"
 
 	# compares occur to local files only, so quietly fetch
 	git fetch > /dev/null
 
-	# we first need to get the latest commit hash
-	# COMMIT_HASH=$(git show --format=%H --no-patch --no-abbrev-commit HEAD..origin/master | head -1)
-    COMMIT_HASH=$(git show --format=%H --no-patch --no-abbrev-commit HEAD..origin/master)
+	# we first need to get the latest commit hash (non-blank if remote is newer)
+    COMMIT_HASH=$(git show --format=%H --no-patch --no-abbrev-commit HEAD..origin/$GIT_THIS_BRANCH)
 
 	# view the file in the commit hash found and pipe to `git hash-object` to compute hash
 	GIT_HASH=$(git show $COMMIT_HASH:$1 | git hash-object --stdin )
@@ -184,6 +184,7 @@ CheckForGitFileChange() {
 		echo "Confirmed $1 is the most recent version found in GitHub."
 	else 
 		echo "Warning! This version of $1 does not match the most recent version in GitHub!"
+		git status | tr -s ' ' | grep "modified: README.md"
 		read -p "Press enter to continue, or Ctrl-C to abort. (manually push/pull recent file)"
 	fi
 	cd $SAVED_CURRENT_PATH
@@ -623,6 +624,11 @@ if [[ "$1" == *"--ujprog"* ]] || [ "$1" == "" ]; then
 
 	  sudo make -f Makefile.linux install                            2>&1 | tee -a "$THIS_LOG"
 	  CheckForError $? "$THIS_LOG"
+      
+	  # The default install directory for ujprog is /usr/local/bin/ujprog however the rxrbln Makefile 
+	  # expects it to be /usr/src/f32c-ujprog/ujprog/ujprog so we'll just create a quick symlink
+	  sudo mkdir -p /usr/src/f32c-ujprog/ujprog/
+      sudo ln -s /usr/local/bin/ujprog /usr/src/f32c-ujprog/ujprog/ujprog
 	fi
 else
 	# for non-help params, alwayss check versions even if not updating them
@@ -717,3 +723,6 @@ if [ "$params" != "--help" ]; then
 	ls $LOG_DIRECTORY | grep -x $THIS_FILE_NAME".*"$LOG_SUFFIX".log"
 fi
 cd $STARTING_PATH
+
+exit
+

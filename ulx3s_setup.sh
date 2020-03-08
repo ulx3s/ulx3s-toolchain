@@ -1,17 +1,8 @@
 #!/bin/bash
-# on a completely new system:
-THISRISCV=riscv32i
-THIS_RISCV_PATH=/opt/$THISRISCV/bin
-MIN_ULX3S_MEMORY=5050000
-
-if [ $(free | grep Mem | awk '{ print $2 }') -lt $MIN_ULX3S_MEMORY ]; then
-  echo ""
-  echo "System memory found:"
-  free
-  echo ""
-  read -p "Warning: At least $MIN_ULX3S_MEMORY bytes of memory is needed. Press a key to continue"
-fi
-
+export WORKSPACE=~/workspace       # put your workspace parent directory here. avoid spaces in path
+export ULX3S_COM=/dev/ttyS8  # put your device name here
+export THISRISCV=riscv32i
+export THIS_RISCV_PATH=/opt/$THISRISCV/bin
 
 sudo apt-get update --assume-yes 
 sudo apt-get upgrade --assume-yes
@@ -66,26 +57,10 @@ make -j$(nproc)
 # see if it is working:
 /opt/riscv32i/bin/riscv32-unknown-elf-gcc --version
 
-# add to path
-if [ "$(cat ~/.bashrc | grep  $THIS_RISCV_PATH)" == "" ]; then
-  echo PATH=$PATH:$THIS_RISCV_PATH >> ~/.bashrc
-  echo "~/.bashrc updated with this line:"
-  echo PATH=$PATH:$THIS_RISCV_PATH
-else
-  echo "Found $THIS_RISCV_PATH in ~/.bashrc - path not changed."
-fi
 
-if [ "$(echo $PATH | grep  $THIS_RISCV_PATH)" == "" ]; then
-  export PATH=$PATH:$THIS_RISCV_PATH
-  echo "Updated current path: $PATH"
-else
-  echo "Path not updated. PATH=$PATH"
-fi
 
 cd ~/workspace
 git clone https://gist.github.com/gojimmypi/f96cd86b2b8595b4cf3be4baf493c5a7 ulx3s_fpga_toolchain
 cd ulx3s_fpga_toolchain
 chmod +x ULX3S_WSL_Toolchain.sh
 ./ULX3S_WSL_Toolchain.sh
-
-
