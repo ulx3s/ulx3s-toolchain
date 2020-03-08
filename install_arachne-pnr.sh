@@ -30,7 +30,7 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-make -j$(nproc)                                                  2>&1 | tee -a "$THIS_LOG"
+make                                                             2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 sudo make install                                                2>&1 | tee -a "$THIS_LOG"
