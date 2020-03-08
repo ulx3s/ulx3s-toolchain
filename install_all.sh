@@ -29,7 +29,7 @@ echo ""
 echo ""
 read -p "Press enter to continue, or Ctrl-C to abort."
 
-chmod + x install_set_permissions.sh
+chmod +x install_set_permissions.sh
 ./install_set_permissions.sh
 
 ./install_system.sh
