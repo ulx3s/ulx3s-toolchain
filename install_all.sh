@@ -59,6 +59,7 @@ chmod +x install_set_permissions.sh
 ./install_ujprog.sh
 ./install_blinky.sh
 ./install_fpga_odysseus.sh
+./install_ulx3s-examples.sh
 ./install_rxrbln-picorv32.sh
 
 echo "***************************************************************************************************"

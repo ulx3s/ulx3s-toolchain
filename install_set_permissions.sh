@@ -21,6 +21,7 @@ chmod +x install_rxrbln-picorv32.sh
 chmod +x install_system.sh
 chmod +x install_ujprog.sh
 chmod +x install_ulx3s-bin.sh
+chmod +x install_ulx3s-examples.sh
 chmod +x install_verilator.sh
 chmod +x install_yosys.sh
 chmod +x riscv-toolchain.sh
