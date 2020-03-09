@@ -18,4 +18,10 @@ cd ulx3s-toolchain
 chmod +x ./install_all.sh
 ./install_all.sh
 ```
+or
+```
+wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
+chmod +x install.sh
+./install.sh
+```
 
