@@ -7,7 +7,10 @@ export SAVED_CURRENT_PATH=$(pwd)
 
 if [ "$ULX3S_COM" == "" ]; then
   export ULX3S_COM=/dev/ttyS8  # put your device name here
+  echo ""
   echo "Warning: setting ULX3S_COM to $ULX3S_COM - consider setting in your .bashrc file."
+  echo ""
+  read -p "Press enter to continue, or Ctrl-C to abort."
 else
   echo "Using ULX3S_COM=$ULX3S_COM"
 fi
@@ -46,6 +49,9 @@ fi
 # typicaly log file name looks like /mnt/c/workspace/install_logs/install_ujprog_20200307_105326.log
 export THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME""$THIS_DELIM""$THIS_PARAM_NAME""_""$LOG_SUFFIX".log"
 
+mkdir -p "$WORKSPACE"
+mkdir -p "$WORKSPACE/install_logs"
+
 #"***************************************************************************************************"
 # check that we are not running as root
 #"***************************************************************************************************"
@@ -58,9 +64,6 @@ else
   read -p "Press enter to continue, or Ctrl-C to abort. (manually push/pull recent file)"
   echo "Startup install with root permissions! (not a good idea) Security Context: $(whoami)" 2>&1 | tee -a  "$THIS_LOG"
 fi
-
-mkdir -p "$WORKSPACE"
-mkdir -p "$WORKSPACE/install_logs"
 
 cd "$WORKSPACE"
 echo ""
