@@ -12,11 +12,14 @@
 set -o pipefail
 
 #"***************************************************************************************************"
-# 
+#  see https://github.com/enjoy-digital/litex/ 
 #"***************************************************************************************************"
 
 # LiteX system requirements (also requires riscv32-unknown-elf-gcc)
-sudo apt install build-essential device-tree-compiler wget git python3-setuptools --assume-yes 2>&1 | tee -a "$THIS_LOG"
+sudo apt-get install build-essential device-tree-compiler wget git python3-setuptools --assume-yes 2>&1 | tee -a "$THIS_LOG"
+
+# LiteX sim requirements
+sudo apt-get install libevent-dev libjson-c-dev verilator --assume-yes            2>&1 | tee -a "$THIS_LOG"
 
 # ensure we have the RISC-V compiler isntalled
 /opt/riscv32i/bin/riscv32-unknown-elf-gcc --version                               2>&1 | tee -a "$THIS_LOG"
@@ -34,10 +37,10 @@ fi
 wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py  2>&1 | tee -a "$THIS_LOG"
 chmod +x litex_setup.py                                                           2>&1 | tee -a "$THIS_LOG"
 
-sudo ./litex_setup.py init                                                        2>&1 | tee -a "$THIS_LOG"
+./litex_setup.py init --user                                                       2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-sudo ./litex_setup.py install                                                     2>&1 | tee -a "$THIS_LOG"
+./litex_setup.py install --user                                                    2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 # $ wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py
