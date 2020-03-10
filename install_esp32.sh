@@ -16,7 +16,7 @@ set -o pipefail
 # see https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html#get-started-get-esp-idf
 #"***************************************************************************************************"
 
-sudo apt-get install gawk gperf grep gettext python python-dev \
+sudo apt-get install libncurses-dev gawk gperf grep gettext python python-dev \
      automake bison flex texinfo help2man libtool libtool-bin make --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
 sudo apt-get install python-pip                                    --assume-yes   2>&1 | tee -a "$THIS_LOG"
@@ -30,6 +30,7 @@ cd ~/esp
 
 echo "***************************************************************************************************"
 echo " ESP32 crosstool-NG. Saving log to $THIS_LOG"
+echo " see https://docs.espressif.com/projects/esp-idf/en/latest/get-started/linux-setup-scratch.html#compile-the-toolchain-from-source"
 echo "***************************************************************************************************"
 if [ ! -d ~/esp/crosstool-NG ]; then
   # Download crosstool-NG and build it:
@@ -44,9 +45,9 @@ else
 fi
 
 echo ""                                                           2>&1 | tee -a "$THIS_LOG"
-echo "checking out crosstool-NG esp-2019r2"                       2>&1 | tee -a "$THIS_LOG"
+echo "checking out crosstool-NG esp-2019r2 (disabled!)"           2>&1 | tee -a "$THIS_LOG"
 echo ""                                                           2>&1 | tee -a "$THIS_LOG"
-git checkout esp-2019r2                                           2>&1 | tee -a "$THIS_LOG"
+#git checkout esp-2019r2                                          2>&1 | tee -a "$THIS_LOG"
 git submodule update --init                                       2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
