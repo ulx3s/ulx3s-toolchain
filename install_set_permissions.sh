@@ -13,7 +13,7 @@ chmod +x install_esp32.sh
 chmod +x install_fpga_odysseus.sh
 chmod +x install_icestorm.sh
 chmod +x install_litex.sh
-chmod +x install_ulx3s-ulx3s.sh
+chmod +x install_litex-ulx3s.sh
 chmod +x install_nextpnr.sh
 chmod +x install_openocd-esp32.sh
 chmod +x install_openocd.sh
