@@ -34,10 +34,10 @@ fi
 wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py  2>&1 | tee -a "$THIS_LOG"
 chmod +x litex_setup.py                                                           2>&1 | tee -a "$THIS_LOG"
 
-./litex_setup.py init                                                        2>&1 | tee -a "$THIS_LOG"
+sudo ./litex_setup.py init                                                        2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-./litex_setup.py install                                                     2>&1 | tee -a "$THIS_LOG"
+sudo ./litex_setup.py install                                                     2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 # $ wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py
@@ -55,6 +55,7 @@ echo " linux-on-litex-vexriscv. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/linux-on-litex-vexriscv ]; then
   git clone --recursive https://github.com/enjoy-digital/linux-on-litex-vexriscv  2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd linux-on-litex-vexriscv
 else
   cd linux-on-litex-vexriscv
