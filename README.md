@@ -1,6 +1,6 @@
 # ulx3s-toolchain
 
-ULX3S FPGA, RISC-V, ESP32 toolchain installer scripts.
+ULX3S FPGA, RISC-V, ESP32 toolchain installer scripts. 
 
 The [ULX3S](https://radiona.org/ulx3s/) is coming soon to [Crowd Supply](https://www.crowdsupply.com/radiona/ulx3s)!
 
@@ -17,8 +17,8 @@ Installation will pause if an error is encountered.
 For getting started, see the included [ulx3s-examples](https://github.com/ulx3s/ulx3s-examples), 
 the [fpga-odysseus/tutorials](https://github.com/ulx3s/fpga-odysseus/tree/master/tutorials), 
 emard's [ulx3s](https://github.com/emard/ulx3s) PCB 
-and [ulx3s-misc](https://github.com/emard/ulx3s-misc) miscellaneous examples (advanced).   
-The [ulx3s.github.io](https://ulx3s.github.io/) has even more resources.
+and [ulx3s-misc](https://github.com/emard/ulx3s-misc) miscellaneous examples (advanced). 
+The [ulx3s.github.io](https://ulx3s.github.io/) has even more resources. 
 
 See [timvideos LiteX for Hardware Engineers](https://github.com/timvideos/litex-buildenv/wiki/LiteX-for-Hardware-Engineers)
 
@@ -27,13 +27,22 @@ See [timvideos LiteX for Hardware Engineers](https://github.com/timvideos/litex-
 Note that in a fresh Ubuntu VM, 30GB of disk space and 5GB (5,120 MB) of RAM is the minimum neccessary. 
 for all components to install successfully.
 
-see `init.sh` for setting parameters. Of particular interest:
+see `init.sh` for setting parameters. Of particular interest (consider putting in ~/.bashrc):
 
+For Ubuntu
 ```
 WORKSPACE=~/workspace
 THIS_ULX3S_DEVICE=LFE5U-85F
 ULX3S_COM=/dev/ttyS8
 ```
+
+For WSL:
+```
+WORKSPACE=/mnt/c/workspace
+THIS_ULX3S_DEVICE=LFE5U-85F
+ULX3S_COM=/dev/ttyS8
+```
+
 Reminder: WSL numbers are [n-1] (e.g. ttyS8 is COM9)
 
 The install is generally attention-free, although so ridiculously long that the `sudo` command will occasionally re-ask for a password.
@@ -85,12 +94,12 @@ BIOS: `$WORKSPACE/linux-on-litex-vexriscv/build/ulx3s/software/bios` for:
 `emulator.bin` and `bios.bin`
 
 
-`workspace/litex-boards/litex_boards/targets`
+`$WORKSPACE/litex-boards/litex_boards/targets`
 
-FPGA: `workspace/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/gateware`
+FPGA: `$WORKSPACE/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/gateware`
 `top.bit`
 
-`workspace/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/software/bios`
+`$WORKSPACE/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/software/bios`
 
 ## Programmming and Code Upload
 
@@ -131,9 +140,9 @@ Find all the files and directories that contain the word ULX3S (case insensitive
 find / -xdev 2>/dev/null -iname "*ULX3S*"
 ```
 
-if litex init and install was run with sudo, usee this to fix re-running `./ulx3s.py` and `./make.py`
+if litex init and install was run with sudo, use this to fix re-running `./ulx3s.py` and `./make.py`
 ```
-sudo chown $USER /home/$USER/workspace/litex-boards/litex_boards/targets
+sudo chown $USER $WORKSPACE/litex-boards/litex_boards/targets
 ```
 
 Find all files created after a given date/time in Powershell:
