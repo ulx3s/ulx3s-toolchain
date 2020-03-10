@@ -34,10 +34,10 @@ fi
 wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py  2>&1 | tee -a "$THIS_LOG"
 chmod +x litex_setup.py                                                           2>&1 | tee -a "$THIS_LOG"
 
-sudo ./litex_setup.py init                                                        2>&1 | tee -a "$THIS_LOG"
+./litex_setup.py init                                                        2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-sudo ./litex_setup.py install                                                     2>&1 | tee -a "$THIS_LOG"
+./litex_setup.py install                                                     2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 # $ wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py
@@ -66,7 +66,4 @@ fi
 
 . $SAVED_CURRENT_PATH/set_riscv_path.sh
 
-./make.py --board ULX3S
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-
-echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+echo "Completed $0 "                                                   | tee -a "$THIS_LOG"
