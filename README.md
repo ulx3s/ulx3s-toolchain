@@ -136,4 +136,8 @@ if litex init and install was run with sudo, usee this to fix re-running `./ulx3
 sudo chown $USER /home/$USER/workspace/litex-boards/litex_boards/targets
 ```
 
+Find all files created after a given date/time in Powershell:
+```
+Get-ChildItem -Recurse | Where-Object { $_.LastWriteTime -ge "03/08/2020 4:25pm" }
+```
 
