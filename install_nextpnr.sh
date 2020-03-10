@@ -27,6 +27,7 @@ sudo apt-get install cmake --assume-yes                          2>&1 | tee -a "
 
 if [ ! -d "$WORKSPACE"/nextpnr ]; then
   git clone https://github.com/YosysHQ/nextpnr.git               2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd nextpnr
 else
   cd nextpnr
@@ -55,7 +56,6 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMak
 # export PYTHONPATH="~/workspace/prjtrellis/database"
 # or check trellis params
 make -j$(nproc)                                                  2>&1 | tee -a "$THIS_LOG"
-
 $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMakeFiles/CMakeError.log"
 
 sudo make install                                                2>&1 | tee -a "$THIS_LOG"

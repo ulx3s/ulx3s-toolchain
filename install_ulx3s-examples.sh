@@ -21,6 +21,7 @@ echo " ulx3s-examples. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/ulx3s-examples ]; then
   git clone --recursive https://github.com/ulx3s/ulx3s-examples.git    2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd ulx3s-examples
 else
   cd ulx3s-examples

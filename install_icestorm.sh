@@ -21,11 +21,14 @@ echo "**************************************************************************
 # see http://www.clifford.at/icestorm/
 if [ ! -d "$WORKSPACE"/icestorm ]; then
   git clone https://github.com/cliffordwolf/icestorm.git icestorm 2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd icestorm
 else
   cd icestorm
   git fetch                                                       2>&1 | tee -a "$THIS_LOG"
   git pull                                                        2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
   make clean                                                      2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi

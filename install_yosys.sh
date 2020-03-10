@@ -22,6 +22,7 @@ echo "**************************************************************************
 # see http://www.clifford.at/yosys/
 if [ ! -d "$WORKSPACE"/yosys ]; then
   git clone https://github.com/cliffordwolf/yosys.git yosys      2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd yosys
 else
   cd yosys

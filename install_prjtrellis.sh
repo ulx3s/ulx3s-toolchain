@@ -20,6 +20,7 @@ echo " prjtrellis (required for nextpnr-ecp5). Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/prjtrellis ]; then
   git clone --recursive https://github.com/SymbiFlow/prjtrellis
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd prjtrellis
 else
   cd prjtrellis

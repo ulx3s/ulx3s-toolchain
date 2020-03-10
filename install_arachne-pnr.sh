@@ -19,6 +19,7 @@ echo " arachne-pnr. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/arachne-pnr ]; then
   git clone https://github.com/cseed/arachne-pnr.git arachne-pnr 2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd arachne-pnr
 else
   cd arachne-pnr

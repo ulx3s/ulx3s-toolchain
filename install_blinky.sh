@@ -20,6 +20,7 @@ echo "@DoctorWkt ULX3S-Blinky. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/ULX3S-Blinky ]; then
   git clone --recursive https://github.com/DoctorWkt/ULX3S-Blinky 2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd ULX3S-Blinky
 else
   cd ULX3S-Blinky

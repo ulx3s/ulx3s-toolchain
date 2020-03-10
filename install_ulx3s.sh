@@ -20,6 +20,7 @@ echo " emard's ULX3S PCB. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/ulx3s ]; then
   git clone --recursive https://github.com/emard/ulx3s 2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd ulx3s
 else
   cd ulx3s

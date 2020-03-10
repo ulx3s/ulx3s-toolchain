@@ -19,6 +19,7 @@ echo " fpga-odysseus. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/fpga-odysseus ]; then
   git clone --recursive https://github.com/ulx3s/fpga-odysseus.git 2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd fpga-odysseus
 else
   cd fpga-odysseus

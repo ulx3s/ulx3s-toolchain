@@ -20,6 +20,7 @@ echo "rxrbln's fork of picorv32 for the ULX3S. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/rxrbln-picorv32 ]; then
   git clone --recursive https://github.com/rxrbln/picorv32 rxrbln-picorv32  2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd rxrbln-picorv32
 else
   cd rxrbln-picorv32

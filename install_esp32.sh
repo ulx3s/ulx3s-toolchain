@@ -34,6 +34,7 @@ echo "**************************************************************************
 if [ ! -d ~/esp/crosstool-NG ]; then
   # Download crosstool-NG and build it:
   git clone https://github.com/espressif/crosstool-NG.git
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd crosstool-NG
 else
   cd crosstool-NG
@@ -47,6 +48,7 @@ echo "checking out crosstool-NG esp-2019r2"                       2>&1 | tee -a 
 echo ""                                                           2>&1 | tee -a "$THIS_LOG"
 git checkout esp-2019r2                                           2>&1 | tee -a "$THIS_LOG"
 git submodule update --init                                       2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 echo ""                                                           2>&1 | tee -a "$THIS_LOG"
 echo "ESP32 bootstrap and configure... "                          2>&1 | tee -a "$THIS_LOG"
@@ -57,7 +59,11 @@ echo ""                                                           2>&1 | tee -a 
 echo Ready to build ESP32 toolchain... $(pwd)                     2>&1 | tee -a "$THIS_LOG"
 
 ./ct-ng xtensa-esp32-elf                                          2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
 ./ct-ng build                                                     2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
 chmod -R u+w builds/xtensa-esp32-elf
 
 cd $SAVED_CURRENT_PATH

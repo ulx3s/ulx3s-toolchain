@@ -27,6 +27,7 @@ echo "  picorv32. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 if [ ! -d "$WORKSPACE"/picorv32 ]; then
   git clone --recursive https://github.com/cliffordwolf/picorv32.git 2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd picorv32
 else
   cd picorv32

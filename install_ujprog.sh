@@ -21,6 +21,7 @@ echo "**************************************************************************
 # NOTE: Although this successfully compiles, it does not seem to work in WSL (no USB device support, use EXE instead)
 if [ ! -d "$WORKSPACE"/f32c_tools ]; then
   git clone https://github.com/f32c/tools.git f32c_tools         2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
   cd f32c_tools/ujprog
 else
   cd f32c_tools
