@@ -2,7 +2,6 @@
 sudo apt-get install dos2unix
 dos2unix ULX3S_WSL_Toolchain.sh
 dos2unix check_for_error.sh
-dos2unix esp32.sh
 dos2unix fpga.sh
 dos2unix gitcheck.sh
 dos2unix init.sh
@@ -21,8 +20,8 @@ dos2unix install_picorv32_riscv32i.sh
 dos2unix install_prjtrellis.sh
 dos2unix install_riscv-gnu-toolchain-rv32i.sh
 dos2unix install_rxrbln-picorv32.sh
-dos2unix install install_set_permissions.sh
-dos2unix install system.sh
+dos2unix install_set_permissions.sh
+dos2unix install_system.sh
 dos2unix install_ujprog.sh
 dos2unix install_ulx3s.sh
 dos2unix install_ulx3s-bin.sh
