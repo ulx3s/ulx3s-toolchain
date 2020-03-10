@@ -1,7 +1,8 @@
 # this script is meant to be called at the beginning of other install_[name].sh scripts
+export THIS_ULX3S_DEVICE=LFE5U-85F
 export THISRISCV=riscv32i
 export THIS_RISCV_PATH=/opt/$THISRISCV/bin
-export MIN_ULX3S_MEMORY=5050000
+export MIN_ULX3S_MEMORY=5040000
 export SAVED_CURRENT_PATH=$(pwd)
 
 if [ "$ULX3S_COM" == "" ]; then
@@ -11,12 +12,15 @@ else
   echo "Using ULX3S_COM=$ULX3S_COM"
 fi
 
-
+# active toolchain component developers may wish to set this to something other than the default.
+# avaoid spaces in the WORKSPACE path.
 if [ "$WORKSPACE" == "" ]; then
   if grep -q Microsoft /proc/version; then
-    export WORKSPACE=/mnt/c/workspace # put your WSL linux path here. Place outside of WSL file system for easy refresh
+    # Set default WSL location to C:\workspace
+    export WORKSPACE=/mnt/c/workspace # put your WSL linux path here. Placed outside of WSL file system for easy refresh
   else
-    export WORKSPACE=~/workspace  # put your pure linux workspace parent directory here. avoid spaces in path
+    # Set Ubuntu location to home directory ~/workspace
+    export WORKSPACE=~/workspace  # put your pure linux workspace parent directory here.
   fi
 fi
 
