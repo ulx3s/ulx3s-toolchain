@@ -24,7 +24,7 @@ See [timvideos LiteX for Hardware Engineers](https://github.com/timvideos/litex-
 
 ## Requirements
 
-Note that in a fresh Ubuntu VM, 35GB of disk space and 5GB (5,120 MB) of RAM is the minimum neccessary. 
+Note that in a fresh Ubuntu VM, 36GB of disk space and 5GB (5,120 MB) of RAM is the minimum neccessary. 
 for all components to install successfully.
 
 see `init.sh` for setting parameters. Of particular interest (consider putting in ~/.bashrc):
