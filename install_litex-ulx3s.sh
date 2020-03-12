@@ -14,10 +14,16 @@ set -o pipefail
 #"***************************************************************************************************"
 # 
 #"***************************************************************************************************"
+echo "***************************************************************************************************"
+echo " install_litex-ulx3s. Saving log to $THIS_LOG"
+echo "***************************************************************************************************"
+. ./set_riscv_path.sh
+
 cd $WORKSPACE/linux-on-litex-vexriscv
 
 if [ "$THIS_ULX3S_DEVICE" == "" ]; then
-  export THIS_ULX3S_DEVICE=LFE5U-85F
+  export THIS_ULX3S_DEVICE=LFE5U-85F                                  2>&1 | tee -a "$THIS_LOG"
+  echo "THIS_ULX3S_DEVICE not defined. Setting to $THIS_ULX3S_DEVICE" 2>&1 | tee -a "$THIS_LOG"
 fi
 
 # call make.py for linux-on-litex-vexriscv
