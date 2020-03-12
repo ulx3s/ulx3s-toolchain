@@ -20,13 +20,22 @@ set -o pipefail
 #"***************************************************************************************************"
 #  check for minimum system resources needed (typically 40GB new Ubuntu VM with 5GB RAM)
 #"***************************************************************************************************"
-if [ $(free | grep Mem | awk '{ print $2 }') -lt $MIN_ULX3S_MEMORY ]; then
+if [ $(free | grep Mem | awk '{ print $2 }') -lt "$MIN_ULX3S_MEMORY" ]; then
   echo ""
   echo "System memory found:"
   free
   echo ""
   read -p "Warning: At least $MIN_ULX3S_MEMORY bytes of memory is needed. Press a key to continue"
 fi
+
+if [ $(df $PWD | awk '/[0-9]%/{print $(NF-2)}' ) -lt "$MIN_ULX3S_DISK" ]; then
+  echo ""
+  echo "Disk space found in $PWD"
+  df $PWD
+  echo ""
+  read -p "Warning: At least $MIN_ULX3S_DISK bytes of free disk space is needed. Press a key to continue"
+fi
+
 
 echo "Install all ULX3S toolchains. Edit parameters in init.sh"
 echo ""

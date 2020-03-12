@@ -3,6 +3,7 @@ export THIS_ULX3S_DEVICE=LFE5U-85F
 export THISRISCV=riscv32i
 export THIS_RISCV_PATH=/opt/$THISRISCV/bin
 export MIN_ULX3S_MEMORY=5040000
+export MIN_ULX3S_DISK=28000000
 export SAVED_CURRENT_PATH=$(pwd)
 
 if [ "$ULX3S_COM" == "" ]; then
