@@ -17,6 +17,8 @@ set -o pipefail
 echo "***************************************************************************************************"
 echo " install_litex-ulx3s. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
+
+cd $SAVED_CURRENT_PATH
 . ./set_riscv_path.sh
 
 cd $WORKSPACE/linux-on-litex-vexriscv
