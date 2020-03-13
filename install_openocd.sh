@@ -32,15 +32,27 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
+echo "***************************************************************************************************"
+echo " openocd bootstrap. Saving log to $THIS_LOG"
+echo "***************************************************************************************************"
 ./bootstrap                                                       2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
+echo "***************************************************************************************************"
+echo " openocd configure. Saving log to $THIS_LOG"
+echo "***************************************************************************************************"
 ./configure --enable-ftdi                                         2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
+echo "***************************************************************************************************"
+echo " openocd make. Saving log to $THIS_LOG"
+echo "***************************************************************************************************"
 make                                                              2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
+echo "***************************************************************************************************"
+echo " openocd make install. Saving log to $THIS_LOG"
+echo "***************************************************************************************************"
 sudo make install                                                 2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
