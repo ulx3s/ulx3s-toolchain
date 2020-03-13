@@ -41,4 +41,5 @@ echo "calling ./ulx3s.py --device $THIS_ULX3S_DEVICE from $(pwd)" 2>&1 | tee -a 
 ./ulx3s.py --device $THIS_ULX3S_DEVICE                            2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-
+# TODO see https://github.com/litex-hub/litex-renode#usage
+# python3 ulx3s.py --cpu-type vexriscv  --csr-csv csr.csv
