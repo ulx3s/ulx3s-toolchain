@@ -67,6 +67,8 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
+sudo chown $USER $WORKSPACE/litex/litex/boards/targets/
+sudo chown $USER $WORKSPACE/litex-boards/litex_boards/targets
 
 . $SAVED_CURRENT_PATH/set_riscv_path.sh
 
