@@ -35,6 +35,10 @@ fi
 echo "***************************************************************************************************"
 echo " openocd bootstrap. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
+
+# hack alert! bootstrap seems to always fail the first time, so we'll run it without saving to log :/
+./bootstrap
+
 ./bootstrap                                                       2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
