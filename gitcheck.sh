@@ -1,4 +1,4 @@
-#~/bin/bash
+#!/bin/bash
 CheckForGitFileChange() {
 	SAVED_CURRENT_PATH=$(pwd)
 	if [ ! -f "$1" ]; then

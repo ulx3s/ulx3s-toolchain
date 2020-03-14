@@ -1,4 +1,5 @@
 #!/bin/bash
+# for reference only
 export WORKSPACE=~/workspace       # put your workspace parent directory here. avoid spaces in path
 export ULX3S_COM=/dev/ttyS8  # put your device name here
 export THISRISCV=riscv32i

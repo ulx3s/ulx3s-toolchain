@@ -1,4 +1,6 @@
 #!/bin/bash
+# this is the old gist from gojimmypi https://gist.github.com/gojimmypi/f96cd86b2b8595b4cf3be4baf493c5a7
+# before being converted to separate files in this repo
 WORKSPACE=~/workspace       # put your workspace parent directory here. avoid spaces in path
 export ULX3S_COM=/dev/ttyS8  # put your device name here
 

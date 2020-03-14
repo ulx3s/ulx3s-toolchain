@@ -1,4 +1,5 @@
 #!/bin/bash
+# for reference only, RISCV. See install_all.sh
 # on a completely new system:
 THISRISCV=riscv32i
 THIS_RISCV_PATH=/opt/$THISRISCV/bin

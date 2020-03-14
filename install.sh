@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "installing git..."
 sudo apt-get install git --assume-yes
 

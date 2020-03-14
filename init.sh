@@ -1,3 +1,4 @@
+#!/bin/bash
 # this script is meant to be called at the beginning of other install_[name].sh scripts
 export THIS_ULX3S_DEVICE=LFE5U-85F
 export THISRISCV=riscv32i

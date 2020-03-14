@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# this is a prior version, see install_all.sh
+#
 WORKSPACE=~/workspace       # put your workspace parent directory here. avoid spaces in path
 export ULX3S_COM=/dev/ttyS8  # put your device name here
 

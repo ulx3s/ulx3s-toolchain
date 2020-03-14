@@ -18,7 +18,6 @@ set -o pipefail
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 
-
 # TODO if already installed, prompt user
 
 

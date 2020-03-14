@@ -36,7 +36,6 @@ if [ $(df $PWD | awk '/[0-9]%/{print $(NF-2)}' ) -lt "$MIN_ULX3S_DISK" ]; then
   read -p "Warning: At least $MIN_ULX3S_DISK bytes of free disk space is needed. Press a key to continue"
 fi
 
-
 echo "Install all ULX3S toolchains. Edit parameters in init.sh"
 echo ""
 echo "logs saved to $LOG_DIRECTORY"

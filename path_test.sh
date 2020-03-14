@@ -1,6 +1,6 @@
 #!/bin/bash
 #"***************************************************************************************************"
-#  common initialization
+#  common initialization, setting RISCV path.
 #"***************************************************************************************************"
 # perform some version control checks on this file
 ./gitcheck.sh $0

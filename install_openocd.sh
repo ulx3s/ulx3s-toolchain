@@ -12,7 +12,9 @@
 set -o pipefail
 
 #"***************************************************************************************************"
-#  openocd see https://github.com/ntfreak/openocd
+#  Install openocd see https://github.com/ntfreak/openocd
+#
+# TODO - why does bootstrap fail on first execution?
 #"***************************************************************************************************"
 THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME"_openocd_"$LOG_SUFFIX".log"
 

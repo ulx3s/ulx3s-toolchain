@@ -1,5 +1,7 @@
+#!/bin/bash
 # because Visual Studio can still be annoying.... (but see CRLF/LF in lower right of file open in IDE, should be LF)
 sudo apt-get install dos2unix
+
 dos2unix ULX3S_WSL_Toolchain.sh
 dos2unix check_for_error.sh
 dos2unix fpga.sh
