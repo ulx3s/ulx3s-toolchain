@@ -31,7 +31,9 @@ dos2unix install_ulx3s-examples.sh
 dos2unix install_ulx3s-misc.sh
 dos2unix install_verilator.sh
 dos2unix install_yosys.sh
+
 dos2unix riscv-toolchain.sh
+dos2unix set_riscv_path.sh
 dos2unix path_test.sh
 dos2unix setup.sh
 dos2unix template.sh
