@@ -12,7 +12,13 @@
 set -o pipefail
 
 #"***************************************************************************************************"
-# install the dfu-util form from ulx3s
+# install the dfu-util form from ulx3s. 
+#
+# normally installed with:
+#
+#   apt-get install dfutil
+#
+# this code is here if you want to dig futher
 #"***************************************************************************************************"
 echo "***************************************************************************************************"
 echo " dfu-util. Saving log to $THIS_LOG"
@@ -30,17 +36,19 @@ fi
 
 # See INSTALL file for building
 
+sudo apt-get install dfu-util
+
 # Generate build system files (requires autoconf from autotools)
-./autogen.sh
+# ./autogen.sh
 
 # Generate makefiles
-./configure
+# ./configure
 
 # Build executables
-make
+# make
 
 # Install executables and manual pages (optional)
-sudo make install
+# sudo make install
 
 
 cd $SAVED_CURRENT_PATH
