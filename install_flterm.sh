@@ -30,5 +30,8 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
+make
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
 cd $SAVED_CURRENT_PATH
 
