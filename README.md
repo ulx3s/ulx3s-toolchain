@@ -27,13 +27,17 @@ See [timvideos LiteX for Hardware Engineers](https://github.com/timvideos/litex-
 Note that in a fresh Ubuntu VM, 36GB of disk space and 5GB (5,120 MB) of RAM is the minimum neccessary. 
 for all components to install successfully.
 
-see `init.sh` for setting parameters. Of particular interest (consider putting in ~/.bashrc):
+see `init.sh` for setting parameters. Of particular interest (consider putting in ~/.bashrc, edit for your respective device):
 
 For Ubuntu
 ```
 WORKSPACE=~/workspace
 THIS_ULX3S_DEVICE=LFE5U-85F
 ULX3S_COM=/dev/ttyS8
+
+# for ESP32 IDF
+cd ~/esp/esp-idf/
+. ./export.sh
 ```
 
 For WSL:
@@ -41,6 +45,10 @@ For WSL:
 WORKSPACE=/mnt/c/workspace
 THIS_ULX3S_DEVICE=LFE5U-85F
 ULX3S_COM=/dev/ttyS8
+
+# for ESP32 IDF
+cd ~/esp/esp-idf/
+. ./export.sh
 ```
 
 Reminder: WSL numbers are [n-1] (e.g. ttyS8 is COM9)
