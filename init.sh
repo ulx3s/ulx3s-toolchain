@@ -8,7 +8,7 @@ export MIN_ULX3S_DISK=28000000
 export SAVED_CURRENT_PATH=$(pwd)
 
 if [ "$ULX3S_COM" == "" ]; then
-  export ULX3S_COM=/dev/ttyS8  # put your device name here
+  export ULX3S_COM=/dev/ttyS15  # put your device name here, or set in ~/.bashrc
   echo ""
   echo "Warning: setting ULX3S_COM to $ULX3S_COM - consider setting in your .bashrc file."
   echo ""
@@ -22,9 +22,11 @@ fi
 if [ "$WORKSPACE" == "" ]; then
   if grep -q Microsoft /proc/version; then
     # Set default WSL location to C:\workspace
+    mkdir -p /mnt/c/workspace
     export WORKSPACE=/mnt/c/workspace # put your WSL linux path here. Placed outside of WSL file system for easy refresh
   else
     # Set Ubuntu location to home directory ~/workspace
+    mkdir -p ~/workspace
     export WORKSPACE=~/workspace  # put your pure linux workspace parent directory here.
   fi
 fi
