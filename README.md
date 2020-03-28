@@ -2,7 +2,7 @@
 
 ULX3S FPGA, RISC-V, ESP32 toolchain installer scripts. 
 
-The [ULX3S](https://radiona.org/ulx3s/) is coming soon to [Crowd Supply](https://www.crowdsupply.com/radiona/ulx3s)!
+The [ULX3S](https://radiona.org/ulx3s/) is now at [Crowd Supply](https://www.crowdsupply.com/radiona/ulx3s)!
 
 run `install_all.sh` to install everything, or see each individual `install_[feature].sh` file.
 
@@ -27,7 +27,7 @@ See [timvideos LiteX for Hardware Engineers](https://github.com/timvideos/litex-
 Note that in a fresh Ubuntu VM, 36GB of disk space and 5GB (5,120 MB) of RAM is the minimum neccessary. 
 for all components to install successfully.
 
-see `init.sh` for setting parameters. Of particular interest (consider putting in ~/.bashrc, edit for your respective device):
+see `init.sh` for setting parameters. Of particular interest (consider putting in `~/.bashrc` - edit for your respective device):
 
 For Ubuntu
 ```
