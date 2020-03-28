@@ -36,7 +36,15 @@ fi
 
 # See INSTALL file for building
 
-sudo apt-get install dfu-util
+dfu-util --version > /dev/null 2>&1
+if [ "$?" != "0" ]; then
+  echo "installing dfu-util ..."
+  sudo apt-get install dfu-util --assume-yes                        2>&1 | tee -a "$THIS_LOG"
+else
+  echo "Skipping install of dfu-util. Already installed."           2>&1 | tee -a "$THIS_LOG"
+fi
+echo ""                                                             2>&1 | tee -a "$THIS_LOG"
+dfu-util --version                                                  2>&1 | tee -a "$THIS_LOG"
 
 # Generate build system files (requires autoconf from autotools)
 # ./autogen.sh

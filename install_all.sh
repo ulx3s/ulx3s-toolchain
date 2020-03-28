@@ -54,6 +54,9 @@ cd $SAVED_CURRENT_PATH
 # pre-compiled binaries
 ./install_ulx3s-bin.sh
 
+# get dfu-util repo for reference, but install via apt-get
+./install_dfu-util.sh
+
 # ESP32
 ./install_esp32.sh
 ./install_openocd-esp32.sh
