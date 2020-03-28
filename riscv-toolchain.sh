@@ -4,8 +4,8 @@
 #"***************************************************************************************************"
 STARTING_PATH=$(pwd)
 
-THISRISCV=riscv32i
-THIS_RISCV_PATH=/opt/$THISRISCV/bin
+THIS_RISCV=riscv32i
+THIS_RISCV_PATH=/opt/$THIS_RISCV/bin
 
 WORKSPACE=~/workspace       # put your workspace parent directory here. avoid spaces in path
 mkdir -p "$WORKSPACE"

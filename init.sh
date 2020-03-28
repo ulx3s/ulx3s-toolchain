@@ -1,8 +1,8 @@
 #!/bin/bash
 # this script is meant to be called at the beginning of other install_[name].sh scripts
 export THIS_ULX3S_DEVICE=LFE5U-85F
-export THISRISCV=riscv32i
-export THIS_RISCV_PATH=/opt/$THISRISCV/bin
+export THIS_RISCV=riscv32i
+export THIS_RISCV_PATH=/opt/$THIS_RISCV/bin
 export MIN_ULX3S_MEMORY=5020000
 export MIN_ULX3S_DISK=28000000
 export SAVED_CURRENT_PATH=$(pwd)
