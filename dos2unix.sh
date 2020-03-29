@@ -1,41 +1,15 @@
 #!/bin/bash
 # because Visual Studio can still be annoying.... (but see CRLF/LF in lower right of file open in IDE, should be LF)
-sudo apt-get install dos2unix
+dos2unix --version > /dev/null 2>&1
+if [ "$?" != "0" ]; then
+  echo "installing dos2unix..."
+  sudo apt-get install dos2unix --assume-yes
+fi
 
-dos2unix ULX3S_WSL_Toolchain.sh
-dos2unix check_for_error.sh
-dos2unix fpga.sh
-dos2unix gitcheck.sh
-dos2unix init.sh
-dos2unix install.sh
-dos2unix install_all.sh
-dos2unix install_arachne-pnr.sh
-dos2unix install_blinky.sh
-dos2unix install_fpga_odysseus.sh
-dos2unix install_icestorm.sh
-dos2unix install_litex.sh
-dos2unix install_litex-ulx3s.sh
-dos2unix install_nextpnr.sh
-dos2unix install_openocd-esp32.sh
-dos2unix install_openocd.sh
-dos2unix install_picorv32_riscv32i.sh
-dos2unix install_prjtrellis.sh
-dos2unix install_riscv-gnu-toolchain-rv32i.sh
-dos2unix install_rxrbln-picorv32.sh
-dos2unix install_set_permissions.sh
-dos2unix install_system.sh
-dos2unix install_ujprog.sh
-dos2unix install_ulx3s.sh
-dos2unix install_ulx3s-bin.sh
-dos2unix install_ulx3s-examples.sh
-dos2unix install_ulx3s-misc.sh
-dos2unix install_verilator.sh
-dos2unix install_yosys.sh
+echo "Converting all *.sh files..."
 
-dos2unix riscv-toolchain.sh
-dos2unix set_riscv_path.sh
-dos2unix path_test.sh
-dos2unix setup.sh
-dos2unix template.sh
-dos2unix ulx3s_setup.sh
-dos2unix version.sh
+for file in ./*.sh
+do
+  dos2unix "$file"
+done
+

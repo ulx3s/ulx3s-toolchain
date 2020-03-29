@@ -1,14 +1,14 @@
 #!/bin/bash
 # this script is meant to be called at the beginning of other install_[name].sh scripts
 export THIS_ULX3S_DEVICE=LFE5U-85F
-export THISRISCV=riscv32i
-export THIS_RISCV_PATH=/opt/$THISRISCV/bin
+export THIS_RISCV=riscv32i
+export THIS_RISCV_PATH=/opt/$THIS_RISCV/bin
 export MIN_ULX3S_MEMORY=5020000
 export MIN_ULX3S_DISK=28000000
 export SAVED_CURRENT_PATH=$(pwd)
 
 if [ "$ULX3S_COM" == "" ]; then
-  export ULX3S_COM=/dev/ttyS8  # put your device name here
+  export ULX3S_COM=/dev/ttyS15  # put your device name here, or set in ~/.bashrc
   echo ""
   echo "Warning: setting ULX3S_COM to $ULX3S_COM - consider setting in your .bashrc file."
   echo ""
@@ -22,9 +22,11 @@ fi
 if [ "$WORKSPACE" == "" ]; then
   if grep -q Microsoft /proc/version; then
     # Set default WSL location to C:\workspace
+    mkdir -p /mnt/c/workspace
     export WORKSPACE=/mnt/c/workspace # put your WSL linux path here. Placed outside of WSL file system for easy refresh
   else
     # Set Ubuntu location to home directory ~/workspace
+    mkdir -p ~/workspace
     export WORKSPACE=~/workspace  # put your pure linux workspace parent directory here.
   fi
 fi

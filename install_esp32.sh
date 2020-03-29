@@ -16,11 +16,19 @@ set -o pipefail
 # see https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html#get-started-get-esp-idf
 #"***************************************************************************************************"
 
+# the old idf needed these:
 sudo apt-get install libncurses-dev gawk gperf grep gettext python python-dev \
      automake bison flex texinfo help2man libtool libtool-bin make --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
 sudo apt-get install python-pip                                    --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
+# the new idf needs theses:
+sudo apt-get install git wget flex bison gperf python python-pip python-setuptools \
+     make ninja-build ccache libffi-dev libssl-dev                 --assume-yes   2>&1 | tee -a "$THIS_LOG"
+
+sudo apt-get install python3 python3-pip python3-setuptools        --assume-yes   2>&1 | tee -a "$THIS_LOG"
+
+#  ensure our idf home diredtory exists
 mkdir -p ~/esp
 cd ~/esp
 
@@ -92,6 +100,7 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 
 # needed in ~/.bashrc
-. $HOME/esp/esp-idf/export.sh                                    2>&1 | tee -a "$THIS_LOG"
+cd ~/esp/esp-idf/
+. ./export.sh                                                    2>&1 | tee -a "$THIS_LOG"
 
 echo "Completed $0 "                                                  | tee -a "$THIS_LOG"

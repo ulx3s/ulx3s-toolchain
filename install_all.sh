@@ -48,8 +48,14 @@ cd $SAVED_CURRENT_PATH
 # system updates and dependencies
 ./install_system.sh
 
+# set udev rules
+./install_udev_rules.sh
+
 # pre-compiled binaries
 ./install_ulx3s-bin.sh
+
+# get dfu-util repo for reference, but install via apt-get
+./install_dfu-util.sh
 
 # ESP32
 ./install_esp32.sh

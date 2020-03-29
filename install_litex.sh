@@ -36,14 +36,24 @@ fi
 # $ chmod +x litex_setup.py
 # $ ./litex_setup.py init install --user (--user to install to user directory)
 
-wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py  2>&1 | tee -a "$THIS_LOG"
-chmod +x litex_setup.py                                                           2>&1 | tee -a "$THIS_LOG"
+if [ ! -f "$WORKSPACE"/litex_setup.py ]; then
+  wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py  2>&1 | tee -a "$THIS_LOG"
+  chmod +x litex_setup.py                                                           2>&1 | tee -a "$THIS_LOG"
 
-./litex_setup.py init --user                                                       2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+  ./litex_setup.py init --user                                                       2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-./litex_setup.py install --user                                                    2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+  ./litex_setup.py install --user                                                    2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+else
+  mv litex_setup.py litex_setup.py.old
+
+  wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py  2>&1 | tee -a "$THIS_LOG"
+  chmod +x litex_setup.py                                                           2>&1 | tee -a "$THIS_LOG"
+
+  ./litex_setup.py update
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+fi
 
 # $ wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py
 # $ chmod +x litex_setup.py

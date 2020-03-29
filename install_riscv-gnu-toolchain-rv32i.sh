@@ -24,7 +24,7 @@ sudo apt-get install autoconf automake autotools-dev curl libmpc-dev \
 sudo mkdir -p /opt/riscv32i
 sudo chown $USER /opt/riscv32i
 
-# setup the path, even  though there may be nothing in it yet
+# setup the path, even though there may be nothing in it yet
 cd ulx3s-toolchain
 . ./set_riscv_path.sh
 

@@ -19,7 +19,10 @@ echo " install_litex-ulx3s. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 
 cd $SAVED_CURRENT_PATH
+cd ulx3s-toolchain
 . ./set_riscv_path.sh
+
+# note we called init.sh when setting the path, so we are back in the $WORKSPACE directory now
 
 cd $WORKSPACE/linux-on-litex-vexriscv
 

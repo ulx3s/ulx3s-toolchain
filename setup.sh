@@ -1,8 +1,8 @@
 #!/bin/bash
 # for reference only, RISCV. See install_all.sh
 # on a completely new system:
-THISRISCV=riscv32i
-THIS_RISCV_PATH=/opt/$THISRISCV/bin
+THIS_RISCV=riscv32i
+THIS_RISCV_PATH=/opt/$THIS_RISCV/bin
 MIN_ULX3S_MEMORY=5050000
 
 if [ $(free | grep Mem | awk '{ print $2 }') -lt $MIN_ULX3S_MEMORY ]; then
