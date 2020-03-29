@@ -4,13 +4,13 @@ ULX3S FPGA, RISC-V, ESP32 toolchain installer scripts.
 
 The [ULX3S](https://radiona.org/ulx3s/) is now at [Crowd Supply](https://www.crowdsupply.com/radiona/ulx3s)!
 
-run `install_all.sh` to install everything, or see each individual `install_[feature].sh` file.
+Run `install_all.sh` to install everything, or see each individual `install_[feature].sh` file.
 
 ## Introduction
 
 This script automates and consolidates the many different toolchain scripts. (FPGA, ESP32, LiteX)
 
-Installation logs are saved in $WORKSPACE/install_logs/ with suffixes YYYYMMSS_HHMMSS such as 20200307_105326
+Installation logs are saved in `$WORKSPACE/install_logs/` with suffixes `YYYYMMSS_HHMMSS` such as `20200307_105326`
 
 Installation will pause if an error is encountered.
 
@@ -51,7 +51,7 @@ cd ~/esp/esp-idf/
 . ./export.sh
 ```
 
-Reminder: WSL numbers are [n-1] (e.g. ttyS8 is COM9)
+Reminder: ~~WSL numbers are [n-1] (e.g. ttyS8 is COM9)~~ (edit: this appears to no longer be the case?)
 
 The install is generally attention-free, although so ridiculously long that the `sudo` command will occasionally re-ask for a password.
 
@@ -74,14 +74,14 @@ to install from scratch:
 sudo apt-get install git --assume-yes
 mkdir -p ~/workspace
 cd ~/workspace
-git clone https://github.com/gojimmypi/ulx3s-toolchain.git
+git clone https://github.com/ulx3s/ulx3s-toolchain.git
 cd ulx3s-toolchain
 chmod +x ./install_all.sh
 ./install_all.sh
 ```
 or
 ```
-wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
+wget https://raw.githubusercontent.com/ulx3s/ulx3s-toolchain/master/install.sh
 chmod +x install.sh
 ./install.sh
 ```
