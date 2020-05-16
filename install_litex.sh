@@ -48,10 +48,15 @@ if [ ! -f "$WORKSPACE"/litex_setup.py ]; then
 else
   mv litex_setup.py litex_setup.py.old
 
+  if [ -f litex_setup.py  ]; then
+    rm  litex_setup.py
+  fi
   wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py  2>&1 | tee -a "$THIS_LOG"
   chmod +x litex_setup.py                                                           2>&1 | tee -a "$THIS_LOG"
 
-  ./litex_setup.py update
+  ./litex_setup.py init --user 
+
+  ./litex_setup.py update --user                                                    2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
