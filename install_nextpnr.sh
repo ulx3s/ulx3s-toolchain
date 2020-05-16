@@ -20,6 +20,9 @@ echo " nextpnr-ecp5. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 # see https://github.com/YosysHQ/nextpnr#nextpnr-ecp5
 
+sudo apt-get install python3-pip
+# pip3 install database
+
 sudo apt-get install libboost-all-dev python3-dev qt5-default clang-format libeigen3-dev --assume-yes 2>&1 | tee -a "$THIS_LOG"
 
 sudo apt-get install cmake --assume-yes                          2>&1 | tee -a "$THIS_LOG"
