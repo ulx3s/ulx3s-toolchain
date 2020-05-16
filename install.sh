@@ -1,5 +1,4 @@
 #!/bin/bash
-, export WORKSPACE=/mnt/c/workspace/test
 
 git --version
 retVal=$?
@@ -44,7 +43,6 @@ if [ "$1" == "barebones" ]; then
   echo "Running ./install_barebones.sh"
   chmod +x ./install_barebones.sh
   ./install_barebones.sh
-
 else 
   echo "Running ./install_all.sh"
   chmod +x ./install_all.sh
