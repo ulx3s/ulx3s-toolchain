@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+#
+#  ujprog is deprecated; see fujprog
+#
+#
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
@@ -38,9 +43,6 @@ fi
 # There's no point to making the linux version of ujprog in WSL, as native USB devices are not supported.
 # but we can compile the Windows version, amd actually call it from WSL (call from /mnt/c... not ~/...)
 if grep -q Microsoft /proc/version; then
-  # THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME"_ming32_64_"$LOG_SUFFIX".log"
-  cd "$WORKSPACE"
-
   echo "***************************************************************************************************"
   echo " ming32_64. Saving log to $THIS_LOG"
   echo "***************************************************************************************************"
