@@ -6,6 +6,10 @@ The [ULX3S](https://radiona.org/ulx3s/) is now at [Crowd Supply](https://www.cro
 
 Run `install_all.sh` to install everything, or see each individual `install_[feature].sh` file.
 
+There's also a `./install.sh barebones` to install only the essentials for FPGA: verilator/yosys/nextpnr/fujprog.
+
+For a quick start without compiling everything yourself, kost has some precompiled [binary releases](https://github.com/alpin3/ulx3s/releases).
+
 ## Introduction
 
 This script automates and consolidates the many different toolchain scripts. (FPGA, ESP32, LiteX)
@@ -74,14 +78,14 @@ to install from scratch:
 sudo apt-get install git --assume-yes
 mkdir -p ~/workspace
 cd ~/workspace
-git clone https://github.com/ulx3s/ulx3s-toolchain.git
+git clone https://github.com/gojimmypi/ulx3s-toolchain.git
 cd ulx3s-toolchain
 chmod +x ./install_all.sh
 ./install_all.sh
 ```
 or
 ```
-wget https://raw.githubusercontent.com/ulx3s/ulx3s-toolchain/master/install.sh
+wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
 chmod +x install.sh
 ./install.sh
 ```
