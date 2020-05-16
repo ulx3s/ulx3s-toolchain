@@ -15,6 +15,11 @@ set -o pipefail
 # fetch and install yoysys
 #"***************************************************************************************************"
 
+sudo apt-get install build-essential clang bison flex \
+	libreadline-dev gawk tcl-dev libffi-dev git \
+	graphviz xdot pkg-config python3 libboost-system-dev \
+	libboost-python-dev libboost-filesystem-dev zlib1g-dev  --assume-yes   2>&1 | tee -a "$THIS_LOG"
+
 echo "***************************************************************************************************"
 echo " yosys. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
@@ -33,7 +38,7 @@ else
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-make -j$(nproc)                                                  2>&1 | tee -a "$THIS_LOG"
+make                                                             2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 sudo make install                                                2>&1 | tee -a "$THIS_LOG"
