@@ -27,6 +27,12 @@ sudo apt-get install libboost-all-dev python3-dev qt5-default clang-format libei
 
 sudo apt-get install cmake --assume-yes                          2>&1 | tee -a "$THIS_LOG"
 
+THIS_ARCH=$1
+
+if [ "$THIS_ARCH" == "" ]; then
+  THIS_ARCH=ecp5
+fi
+
 
 if [ ! -d "$WORKSPACE"/nextpnr ]; then
   git clone https://github.com/YosysHQ/nextpnr.git               2>&1 | tee -a "$THIS_LOG"
@@ -44,7 +50,7 @@ fi
 
 # Note the "DTRELLIS_INSTALL_PREFIX=/usr" value is the install directory, not git workspace clone directory
 # If CMake fails, try rm CMakeCache.txt
-cmake -DARCH=ecp5 -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
+cmake -DARCH=$THIS_ARCH -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
 echo This error: $?
 $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMakeFiles/CMakeError.log"
 
