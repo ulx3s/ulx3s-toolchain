@@ -18,7 +18,7 @@ else
 fi
 
 # active toolchain component developers may wish to set this to something other than the default.
-# avaoid spaces in the WORKSPACE path.
+# avoid spaces in the WORKSPACE path.
 if [ "$WORKSPACE" == "" ]; then
   if grep -q Microsoft /proc/version; then
     # Set default WSL location to C:\workspace
