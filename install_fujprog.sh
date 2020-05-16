@@ -6,16 +6,16 @@
 ./gitcheck.sh $0
 
 # initialize some environment variables and perform some sanity checks
-. ./init.sh ujprog
+. ./init.sh
 
 # we don't want tee to capture exit codes
 set -o pipefail
 
 #"***************************************************************************************************"
-# Install ujprog from f32c (used to upload binaries to ULX3S)
+# Install fujprog from f32c (used to upload binaries to ULX3S)
 #"***************************************************************************************************"
 echo "***************************************************************************************************"
-echo " ujprog. Saving log to $THIS_LOG"
+echo " fujprog. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 
 sudo apt-get install libftdi1-dev libusb-dev cmake make build-essential --assume-yes 2>&1 | tee -a "$THIS_LOG"
@@ -37,7 +37,7 @@ else
   # $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-# There's no point to making the linux version of ujprog in WSL, as native USB devices are not supported.
+# There's no point to making the linux version of fujprog in WSL, as native USB devices are not supported.
 # but we can compile the Windows version, amd actually call it from WSL (call from /mnt/c... not ~/...)
 if grep -q Microsoft /proc/version; then
   echo "***************************************************************************************************"
