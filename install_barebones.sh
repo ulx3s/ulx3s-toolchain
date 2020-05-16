@@ -11,7 +11,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
-
+# ./init.sh leaves us at the $WORKSPACE directory, so change to ulx3s-toolchain
+cd ulx3s-toolchain
 
 ./install_set_permissions.sh
 
@@ -20,7 +21,7 @@ set -o pipefail
 ./install_yosys.sh
 
 
-./install_nexptpnr-ecp5.sh
+./install_nexptpnr.sh ecp5
 
 ./install_fujprog.sh
 
