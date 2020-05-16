@@ -308,7 +308,7 @@ fi
 
 
 if [[ "$1" == *"--openocd"* ]] || [ "$1" == "" ]; then
-    sudo apt install libtool automake pkg-config libusb-1.0-0-dev
+    sudo apt install libtool automake pkg-config libusb-1.0-0-dev --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
 	cd "$WORKSPACE"
 	THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME"_openocd_"$LOG_SUFFIX".log"
