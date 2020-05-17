@@ -2,6 +2,8 @@
 #"***************************************************************************************************"
 #  ensure all the scripts here are executable
 #"***************************************************************************************************"
+echo "setting permissions"
+pwd
 chmod +x install_set_permissions.sh
 ./install_set_permissions.sh
 
@@ -17,6 +19,7 @@ chmod +x install_set_permissions.sh
 # we don't want tee to capture exit codes
 set -o pipefail
 
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 #  check for minimum system resources needed (typically 40GB new Ubuntu VM with 5GB RAM)
 #"***************************************************************************************************"
