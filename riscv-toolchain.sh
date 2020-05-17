@@ -332,7 +332,7 @@ if [[ "$1" == *"--openocd"* ]] || [ "$1" == "" ]; then
 fi
 
 
-sudo apt-get install iverilog
+sudo apt-get install iverilog --assume-yes
 
 
 cd ~/workspace
