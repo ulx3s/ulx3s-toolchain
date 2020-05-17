@@ -1,4 +1,7 @@
 #!/bin/bash
+echo "sudo apt-get update..."
+# a fresh VM will sometimes not be able to install anything until after a fresh apt-get update
+sudo apt-get update
 
 git --version
 retVal=$?
@@ -38,6 +41,9 @@ else
   git fetch                                                     
   git pull                                                      
 fi
+
+chmod +x install_set_permissions.sh
+./install_set_permissions.sh
 
 if [ "$1" == "barebones" ]; then
   echo "Running ./install_barebones.sh"
