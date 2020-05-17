@@ -33,13 +33,13 @@ pwd
 
 if [ ! -d "$WORKSPACE"/ulx3s-toolchain ]; then
   echo "clone ulx3s-toolchain..."
-  git clone https://github.com/gojimmypi/ulx3s-toolchain.git       
+  git clone https://github.com/gojimmypi/ulx3s-toolchain.git
   cd ulx3s-toolchain
 else
   echo "update ulx3s-toolchain..."
   cd ulx3s-toolchain
-  git fetch                                                     
-  git pull                                                      
+  git fetch
+  git pull
 fi
 
 if [ ! -d "$WORKSPACE"/ulx3s-toolchain ]; then
