@@ -11,6 +11,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # install emard's repo of all the great ULX3S docs
 #"***************************************************************************************************"

@@ -11,7 +11,11 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
-
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
+#"***************************************************************************************************"
+# Install udev rules
+#"***************************************************************************************************"
 cd ulx3s-toolchain
 
 # see https://github.com/emard/ulx3s-bin

@@ -11,6 +11,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Install all system dependencies and updates
 #"***************************************************************************************************"
@@ -127,7 +129,7 @@ echo "**************************************************************************
 # 0 upgraded, 1 newly installed, 0 to remove and 1 not upgraded.
 # Need to get 2878 kB of archives.
 # After this operation, 13.1 MB of additional disk space will be used.
-sudo apt-get install verilator       2>&1 | tee -a "$THIS_LOG"
+sudo apt-get install verilator  --assume-yes    2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $?          "$THIS_LOG"
 
 if grep -q Microsoft /proc/version; then

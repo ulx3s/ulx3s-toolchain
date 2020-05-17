@@ -11,6 +11,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Install fujprog from f32c (used to upload binaries to ULX3S)
 #"***************************************************************************************************"

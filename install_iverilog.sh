@@ -11,13 +11,15 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # icestorm
 #"***************************************************************************************************"
 echo "***************************************************************************************************"
 echo " icestorm. Saving log to: "$THIS_LOG
 echo "***************************************************************************************************"
-sudo apt-get install autoconf gperf                               2>&1 | tee -a "$THIS_LOG"
+sudo apt-get install autoconf gperf --assume-yes                  2>&1 | tee -a "$THIS_LOG"
 
 
 if [ ! -d "$WORKSPACE"/iverilog ]; then

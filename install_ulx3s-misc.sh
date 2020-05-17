@@ -11,6 +11,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # fetch the advanced ULX3S examples into the workspace
 #"***************************************************************************************************"

@@ -11,6 +11,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Install nextpnr-ecp5
 #"***************************************************************************************************"
@@ -20,7 +22,7 @@ echo " nextpnr-ecp5. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 # see https://github.com/YosysHQ/nextpnr#nextpnr-ecp5
 
-sudo apt-get install python3-pip
+sudo apt-get install python3-pip --assume-yes
 # pip3 install database
 
 sudo apt-get install libboost-all-dev python3-dev qt5-default clang-format libeigen3-dev --assume-yes 2>&1 | tee -a "$THIS_LOG"
