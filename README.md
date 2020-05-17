@@ -73,7 +73,26 @@ Keep this in mind if your firewall or [dns blocker](https://pi-hole.net/) blocks
 
 ## Installation
 
-to install from scratch:
+### Quick Start, only the bare essentials:
+
+```
+wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
+chmod +x install.sh
+./install.sh barebones
+```
+
+
+### Full Install
+
+Install everything:
+
+```
+wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
+chmod +x install.sh
+./install.sh
+```
+or
+
 ```
 sudo apt-get install git --assume-yes
 mkdir -p ~/workspace
@@ -82,12 +101,6 @@ git clone https://github.com/gojimmypi/ulx3s-toolchain.git
 cd ulx3s-toolchain
 chmod +x ./install_all.sh
 ./install_all.sh
-```
-or
-```
-wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
-chmod +x install.sh
-./install.sh
 ```
 
 ## ULX3S Binaries
