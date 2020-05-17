@@ -28,7 +28,7 @@ pwd
 ./install_yosys.sh
 
 
-./install_nexptpnr.sh ecp5
+./install_nextpnr.sh ecp5
 
 ./install_fujprog.sh
 
