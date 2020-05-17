@@ -34,6 +34,13 @@ pwd
 if [ ! -d "$WORKSPACE"/ulx3s-toolchain ]; then
   echo "clone ulx3s-toolchain..."
   git clone https://github.com/gojimmypi/ulx3s-toolchain.git       
+  if [ $retVal -ne 0 ]; then
+    if grep -q Microsoft /proc/version; then
+      echo "Error cloning with git. If this is a fresh WSL install, you should reboot."
+    else
+      echo "Error cloning with git. Check permissions of $WORKSPACE"
+    fi
+  fi
   cd ulx3s-toolchain
 else
   echo "update ulx3s-toolchain..."
