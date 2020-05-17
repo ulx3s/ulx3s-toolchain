@@ -34,13 +34,6 @@ pwd
 if [ ! -d "$WORKSPACE"/ulx3s-toolchain ]; then
   echo "clone ulx3s-toolchain..."
   git clone https://github.com/gojimmypi/ulx3s-toolchain.git       
-  if [ $retVal -ne 0 ]; then
-    if grep -q Microsoft /proc/version; then
-      echo "Error cloning with git. If this is a fresh WSL install, you should reboot."
-    else
-      echo "Error cloning with git. Check permissions of $WORKSPACE"
-    fi
-  fi
   cd ulx3s-toolchain
 else
   echo "update ulx3s-toolchain..."
@@ -49,17 +42,30 @@ else
   git pull                                                      
 fi
 
-chmod +x install_set_permissions.sh
-./install_set_permissions.sh
+if [ ! -d "$WORKSPACE"/ulx3s-toolchain ]; then
 
-if [ "$1" == "barebones" ]; then
-  echo "Running ./install_barebones.sh"
-  chmod +x ./install_barebones.sh
-  ./install_barebones.sh
-else 
-  echo "Running ./install_all.sh"
-  chmod +x ./install_all.sh
-  ./install_all.sh
+  if grep -q Microsoft /proc/version; then
+    echo "Error cloning with git. If this is a fresh WSL install, you should reboot."
+  else
+    echo "Error cloning with git. Check permissions of $WORKSPACE"
+  fi
 
-  echo "Done!"
+else
+
+  chmod +x install_set_permissions.sh
+  ./install_set_permissions.sh
+
+  if [ "$1" == "barebones" ]; then
+    echo "Running ./install_barebones.sh"
+    chmod +x ./install_barebones.sh
+    ./install_barebones.sh
+  else 
+    echo "Running ./install_all.sh"
+    chmod +x ./install_all.sh
+    ./install_all.sh
+
+    echo "Done!"
+  fi
 fi
+
+
