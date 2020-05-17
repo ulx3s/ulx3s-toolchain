@@ -43,11 +43,13 @@ else
 fi
 
 if [ ! -d "$WORKSPACE"/ulx3s-toolchain ]; then
-
+  echo ""
+  echo "Error cloning with git. Check permissions of $WORKSPACE"
+  echo ""
   if grep -q Microsoft /proc/version; then
-    echo "Error cloning with git. If this is a fresh WSL install, you should reboot."
-  else
-    echo "Error cloning with git. Check permissions of $WORKSPACE"
+    echo ""
+    echo "If this is a fresh WSL install, try rebooting."
+    echo ""
   fi
 
 else
@@ -59,6 +61,7 @@ else
     echo "Running ./install_barebones.sh"
     chmod +x ./install_barebones.sh
     ./install_barebones.sh
+
   else 
     echo "Running ./install_all.sh"
     chmod +x ./install_all.sh
