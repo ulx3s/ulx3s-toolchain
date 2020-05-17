@@ -52,6 +52,7 @@ if grep -q Microsoft /proc/version; then
   cd build
   cmake -DCMAKE_TOOLCHAIN_FILE=`pwd`/../cmake/Toolchain-cross-mingw32.cmake ..
   make
+  echo "fujprog.exe is in $WORKSPACE/fujprog/build"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 else
   mkdir -p build
@@ -59,7 +60,7 @@ else
   cmake ..                                                       2>&1 | tee -a "$THIS_LOG"
   make                                                           2>&1 | tee -a "$THIS_LOG"
 
-  make install                                                   2>&1 | tee -a "$THIS_LOG"
+  sudo make install                                              2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 

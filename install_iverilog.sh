@@ -21,7 +21,6 @@ echo " icestorm. Saving log to: "$THIS_LOG
 echo "***************************************************************************************************"
 sudo apt-get install autoconf gperf --assume-yes                  2>&1 | tee -a "$THIS_LOG"
 
-
 if [ ! -d "$WORKSPACE"/iverilog ]; then
   git clone https://github.com/steveicarus/iverilog.git           2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"

@@ -23,7 +23,6 @@ pwd
 # set udev rules
 ./install_udev_rules.sh
 
-
 ./install_verilator.sh
 ./install_yosys.sh
 

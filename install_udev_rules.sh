@@ -25,5 +25,5 @@ if [ -f "/etc/udev/rules.d/80-fpga-ulx3s.rules" ]; then
 else
   echo "Copy /etc/udev/rules.d/80-fpga-ulx3s.rules"                       2>&1 | tee -a "$THIS_LOG"
   sudo cp 80-fpga-ulx3s.rules /etc/udev/rules.d/80-fpga-ulx3s.rules       2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh    $?          "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh   $?          "$THIS_LOG"
 fi
