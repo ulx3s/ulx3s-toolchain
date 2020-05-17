@@ -11,6 +11,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Show the versions of key components that are installed
 #"***************************************************************************************************"
@@ -42,4 +44,4 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 cd $SAVED_CURRENT_PATH
 
-echo "Completed $0 "                                                             | tee -a "$THIS_LOG"
+echo "This version of ulx3s-toolchain is version 0.1"                                                             | tee -a "$THIS_LOG"
