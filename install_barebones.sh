@@ -6,15 +6,22 @@
 ./gitcheck.sh $0
 
 # initialize some environment variables and perform some sanity checks
-. ./init.sh ujprog
+. ./init.sh
 
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ./init.sh leaves us at the $WORKSPACE directory, so change to ulx3s-toolchain
-cd ulx3s-toolchain
+cd "$WORKSPACE"/ulx3s-toolchain
+echo "Barebone install!"
+pwd
 
 ./install_set_permissions.sh
+
+# system updates and dependencies
+./install_system.sh
+
+# set udev rules
+./install_udev_rules.sh
 
 
 ./install_verilator.sh
