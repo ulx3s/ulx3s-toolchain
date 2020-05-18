@@ -26,6 +26,7 @@ pwd
 ./install_verilator.sh
 ./install_yosys.sh
 
+./install_prjtrellis.sh
 
 ./install_nextpnr.sh ecp5
 
