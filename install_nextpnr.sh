@@ -27,6 +27,9 @@ sudo apt-get install python3-pip --assume-yes
 
 sudo apt-get install libboost-all-dev python3-dev qt5-default clang-format libeigen3-dev --assume-yes 2>&1 | tee -a "$THIS_LOG"
 
+# Is this one really needed?
+sudo apt-get install libboost-filesystem-dev libboost-thread-dev libboost-program-options-dev libboost-python-dev libboost-iostreams-dev libboost-dev  --assume-yes 2>&1 | tee -a "$THIS_LOG"
+
 sudo apt-get install cmake --assume-yes                          2>&1 | tee -a "$THIS_LOG"
 
 THIS_ARCH=$1
@@ -52,7 +55,12 @@ fi
 
 # Note the "DTRELLIS_INSTALL_PREFIX=/usr" value is the install directory, not git workspace clone directory
 # If CMake fails, try rm CMakeCache.txt
-cmake -DARCH=$THIS_ARCH -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
+#
+# See for https://github.com/YosysHQ/nextpnr/issues/215#issuecomment-456053526
+# for -DBUILD_PYTHON=OFF -DBUILD_GUI=OFF and  "cannot find -lpthreads" error
+
+cmake -DARCH=$THIS_ARCH -DBUILD_PYTHON=OFF -DBUILD_GUI=OFF -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
+
 echo This error: $?
 $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMakeFiles/CMakeError.log"
 
