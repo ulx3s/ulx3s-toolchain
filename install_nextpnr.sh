@@ -58,8 +58,13 @@ fi
 #
 # See for https://github.com/YosysHQ/nextpnr/issues/215#issuecomment-456053526
 # for -DBUILD_PYTHON=OFF -DBUILD_GUI=OFF and  "cannot find -lpthreads" error
-
-cmake -DARCH=$THIS_ARCH -DBUILD_PYTHON=OFF -DBUILD_GUI=OFF -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
+#
+# note that it is a hack, and is likely sweeping problems under the carpet.
+# see https://github.com/YosysHQ/nextpnr/pull/443#issuecomment-630456185
+#
+# cmake -DARCH=$THIS_ARCH -DBUILD_PYTHON=OFF -DBUILD_GUI=OFF -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
+#
+cmake -DARCH=$THIS_ARCH  -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
 
 echo This error: $?
 $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMakeFiles/CMakeError.log"
