@@ -22,8 +22,20 @@ echo " nextpnr-ecp5. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 # see https://github.com/YosysHQ/nextpnr#nextpnr-ecp5
 
-sudo apt-get install python3-pip --assume-yes
-# pip3 install database
+sudo apt-get install python3-pip --assume-yes    2>&1 | tee -a "$THIS_LOG"
+# pip3 install database 
+# sudo apt-get install libpython3-all-dev          2>&1 | tee -a "$THIS_LOG"
+
+# cd /usr
+# find . -name "Python.h"
+# ./include/python2.7/Python.h
+# ./include/python3.6m/Python.h
+# export PATH="/usr/include/python3.6m:$PATH"
+
+# pkg-config --cflags python
+
+
+# export PATH="/usr/include/python3.6m:$PATH"
 
 sudo apt-get install libboost-all-dev python3-dev qt5-default clang-format libeigen3-dev --assume-yes 2>&1 | tee -a "$THIS_LOG"
 
@@ -84,6 +96,51 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMak
 
 sudo make install                                                2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $?
+
+
+# hack to fix error: nextpnr-ecp5: error while loading shared libraries: libQt5Core.so.5: cannot open shared object file: No such file or directory
+nextpnr-$THIS_ARCH --version                                     2>&1 | tee -a "$THIS_LOG"
+EXIT_STAT=$?
+
+if [ $EXIT_STAT -ne 0 ];then
+  echo ""
+  echo "Warning: nextpnr-$THIS_ARCH problem detected!"           2>&1 | tee -a "$THIS_LOG"
+  echo ""
+  NEXTMSG="$(nextpnr-$THIS_ARCH --version 2>&1)"
+
+  if [ "$NEXTMSG" == "nextpnr-ecp5: error while loading shared libraries: libQt5Core.so.5: cannot open shared object file: No such file or directory" ]; then
+    while true; do
+      echo "Do you wish to try to fix libQt5Core.so.5 with:"
+      echo ""
+      echo "  strip --remove-section=.note.ABI-tag /usr/./lib/x86_64-linux-gnu/libQt5Core.so.5"
+      echo ""
+      read -p "Try this?" yn
+      case $yn in
+          [Yy]* ) echo "Fixing!"; sudo strip --remove-section=.note.ABI-tag /usr/./lib/x86_64-linux-gnu/libQt5Core.so.5; break;;
+          [Nn]* ) echo "Fix NOT applied."; break;;
+          * ) echo "Please answer yes or no.";;
+      esac
+    done
+
+    # echo "Fixing libQt5Core.so.5 with: strip --remove-section=.note.ABI-tag /usr/./lib/x86_64-linux-gnu/libQt5Core.so.5"
+
+    # sudo strip --remove-section=.note.ABI-tag /usr/./lib/x86_64-linux-gnu/libQt5Core.so.5
+    nextpnr-$THIS_ARCH --version
+    EXIT_STAT=$?
+
+    if [ $EXIT_STAT -ne 0 ];then
+      echo "ERROR: Fix failed."
+    else
+      echo "Fix was successful!"
+    fi
+  else
+    echo "ERROR: No fix is avilable at this time."
+  fi
+else
+  echo "nextpnr-$1 success!"
+fi
+
+# sudo strip --remove-section=.note.ABI-tag /usr/./lib/x86_64-linux-gnu/libQt5Core.so.5
 
 cd $SAVED_CURRENT_PATH
 
