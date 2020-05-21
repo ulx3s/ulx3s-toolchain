@@ -54,7 +54,10 @@ if [ ! -d "$WORKSPACE"/ulx3s-toolchain ]; then
 
 else
 
+  # ulx3s-toolchain directory found
   chmod +x install_set_permissions.sh
+  chmod +x dos2unix.sh
+
   ./install_set_permissions.sh
 
   if [ "$1" == "barebones" ]; then
@@ -70,5 +73,3 @@ else
     echo "Done!"
   fi
 fi
-
-
