@@ -16,6 +16,8 @@ cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Install prjtrellis
 #"***************************************************************************************************"
+sudo apt-get install python3-dev clang cmake                     2>&1 | tee -a "$THIS_LOG"
+
 
 echo "***************************************************************************************************"
 echo " prjtrellis (required for nextpnr-ecp5). Saving log to $THIS_LOG"
@@ -30,6 +32,8 @@ else
   git pull                                                       2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
+
+source environment.sh
 
 # cmake must run from the libtrellis directory
 cd libtrellis
