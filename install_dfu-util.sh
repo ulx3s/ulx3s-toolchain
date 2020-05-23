@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -25,19 +30,17 @@ cd "$WORKSPACE"
 echo "***************************************************************************************************"
 echo " dfu-util. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/dfu-util ]; then
-  git clone --recursive https://github.com/ulx3s/dfu-util.git     2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd dfu-util
-else
-  cd dfu-util
-  git fetch                                                       2>&1 | tee -a "$THIS_LOG"
-  git pull                                                        2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ulx3s/dfu-util.git dfu-util $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd dfu-util
 
 # See INSTALL file for building
 
+# we'll install the apt-get version for now...
 dfu-util --version > /dev/null 2>&1
 if [ "$?" != "0" ]; then
   echo "installing dfu-util ..."
@@ -46,7 +49,9 @@ else
   echo "Skipping install of dfu-util. Already installed."           2>&1 | tee -a "$THIS_LOG"
 fi
 echo ""                                                             2>&1 | tee -a "$THIS_LOG"
+
 dfu-util --version                                                  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 # Generate build system files (requires autoconf from autotools)
 # ./autogen.sh

@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -17,19 +22,14 @@ cd "$WORKSPACE"
 # fpga-odysseus example
 #"***************************************************************************************************"
 
-echo "***************************************************************************************************"
-echo " fpga-odysseus. Saving log to $THIS_LOG"
-echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/fpga-odysseus ]; then
-  git clone --recursive https://github.com/ulx3s/fpga-odysseus.git 2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd fpga-odysseus
-else
-  cd fpga-odysseus
-  git fetch                                                       2>&1 | tee -a "$THIS_LOG"
-  git pull                                                        2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ulx3s/fpga-odysseus.git fpga-odysseus $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd fpga-odysseus
+
+
 
 cd $SAVED_CURRENT_PATH
 

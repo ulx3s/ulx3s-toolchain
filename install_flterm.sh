@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -20,14 +25,19 @@ cd "$WORKSPACE"
 echo "***************************************************************************************************"
 echo " timvideos/flterm. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/flterm ]; then
-  git clone --recursive https://github.com/timvideos/flterm.git   2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd flterm
-else
-  cd flterm
-  git fetch                                                       2>&1 | tee -a "$THIS_LOG"
-  git pull                                                        2>&1 | tee -a "$THIS_LOG"
+
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/timvideos/flterm.git flterm $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd flterm
+
+# optional clean
+if [ "$THIS_CLEAN" == "true" ]; then  
+  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+  make clean                                                       2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 

@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -21,16 +26,15 @@ THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME"_ulx3s-bin_"$LOG_SUFFIX".log"
 echo "***************************************************************************************************"
 echo " ulx3s-bin. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/ulx3s-bin ]; then
-  git clone --recursive https://github.com/ulx3s/ulx3s-bin.git    2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd ulx3s-bin
-else
-  cd ulx3s-bin
-  git fetch                                                       2>&1 | tee -a "$THIS_LOG"
-  git pull                                                        2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ulx3s/ulx3s-bin.git ulx3s-bin $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd ulx3s-bin
+
+# TODO - any checks here?
 
 cd $SAVED_CURRENT_PATH
 
