@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+THIS_CHECKOUT=93ef516d919
+THIS_CLEAN=true
+# 93ef516d919
+# af7b7b6dc18919 interesting error
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -34,27 +39,32 @@ echo "**************************************************************************
 echo " yosys. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 # see http://www.clifford.at/yosys/
-if [ ! -d "$WORKSPACE"/yosys ]; then
-  git clone https://github.com/cliffordwolf/yosys.git yosys      2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd yosys
-else
-  cd yosys
-  git fetch                                                      2>&1 | tee -a "$THIS_LOG"
-  git pull                                                       2>&1 | tee -a "$THIS_LOG" 
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-  # TODO optional clean
-  make clean                                                     2>&1 | tee -a "$THIS_LOG"
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/cliffordwolf/yosys.git yosys $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd yosys
+
+# optional clean
+if [ "$THIS_CLEAN" == "true" ]; then  
+  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+  make clean                                                       2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-make                                                             2>&1 | tee -a "$THIS_LOG"
+echo ""                                                            2>&1 | tee -a "$THIS_LOG"
+echo "make"                                                        2>&1 | tee -a "$THIS_LOG"
+make                                                               2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-sudo make install                                                2>&1 | tee -a "$THIS_LOG"
+echo ""                                                            2>&1 | tee -a "$THIS_LOG"
+echo "sudo make install"                                           2>&1 | tee -a "$THIS_LOG"
+sudo make install                                                  2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 cd $SAVED_CURRENT_PATH
 
-echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+echo "Completed $0 "                                                    | tee -a "$THIS_LOG"
