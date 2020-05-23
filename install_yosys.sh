@@ -2,7 +2,7 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
-THIS_CHECKOUT=93ef516d919
+THIS_CHECKOUT=master
 THIS_CLEAN=true
 # 93ef516d919
 # af7b7b6dc18919 interesting error
@@ -66,5 +66,9 @@ sudo make install                                                  2>&1 | tee -a
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 cd $SAVED_CURRENT_PATH
+
+echo ""                                             | tee -a "$THIS_LOG"
+yosys --version                                     | tee -a "$THIS_LOG"
+echo ""                                             | tee -a "$THIS_LOG"
 
 echo "Completed $0 "                                                    | tee -a "$THIS_LOG"
