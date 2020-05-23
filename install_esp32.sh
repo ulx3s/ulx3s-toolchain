@@ -22,13 +22,21 @@ cd "$WORKSPACE"
 sudo apt-get install libncurses-dev gawk gperf grep gettext python python-dev \
      automake bison flex texinfo help2man libtool libtool-bin make --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
-sudo apt-get install python-pip                                    --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
 # the new idf needs theses:
 sudo apt-get install git wget flex bison gperf python python-pip python-setuptools \
      make ninja-build ccache libffi-dev libssl-dev                 --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
 sudo apt-get install python3 python3-pip python3-setuptools        --assume-yes   2>&1 | tee -a "$THIS_LOG"
+
+# see https://github.com/ulx3s/ulx3s-toolchain/issues/5
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+
+#if [ "$(lsb_release --release)" == "Release:        20.04" ]; then
+#  alias pip="pip3"
+#else
+#  sudo apt-get install python-pip                                    --assume-yes   2>&1 | tee -a "$THIS_LOG"
+#fi
 
 #  ensure our idf home diredtory exists
 mkdir -p ~/esp
