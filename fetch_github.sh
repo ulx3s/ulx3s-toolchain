@@ -67,6 +67,8 @@ if [ "$THIS_DIR" != "" ]; then
       if [ "$?" != "0" ]; then
         echo ""
         echo "Error encountered during: git checkout master; # $THIS_REPO_URL"
+        echo ""
+        echo "Consider: git checkout .   # warning! abandon all changes and check everything out"
         exit 1
       fi
 
