@@ -25,7 +25,7 @@ echo "**************************************************************************
 
 # Call the common github checkout:
 
-$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/gojimmypi/TEMPLATE.git yosys $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/gojimmypi/TEMPLATE.git TEMPLATE $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 cd TEMPLATE
