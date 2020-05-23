@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+# THIS_CHECKOUT=master
+# THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -35,5 +40,9 @@ if grep -q Microsoft /proc/version; then
   sudo apt-get install mingw-w64 --assume-yes  2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh         $?          "$THIS_LOG"
 fi
+
+echo ""                                             | tee -a "$THIS_LOG"
+verilator --version                                 | tee -a "$THIS_LOG"
+echo ""                                             | tee -a "$THIS_LOG"
 
 echo "Completed $0 "                                | tee -a "$THIS_LOG"
