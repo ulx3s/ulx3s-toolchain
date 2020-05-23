@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -25,14 +30,18 @@ sudo apt-get install libtool automake pkg-config libusb-1.0-0-dev  --assume-yes 
 echo "***************************************************************************************************"
 echo " openocd. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/openocd ]; then
-  git clone --recursive https://github.com/ntfreak/openocd.git    2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd openocd
-else
-  cd openocd
-  git fetch                                                       2>&1 | tee -a "$THIS_LOG"
-  git pull                                                        2>&1 | tee -a "$THIS_LOG"
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ntfreak/openocd.git openocd $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd openocd
+
+# optional clean
+if [ "$THIS_CLEAN" == "true" ]; then  
+  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+  make clean                                                       2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 

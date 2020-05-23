@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -50,19 +55,19 @@ if [ "$THIS_ARCH" == "" ]; then
   THIS_ARCH=ecp5
 fi
 
+# Call the common github checkout:
 
-if [ ! -d "$WORKSPACE"/nextpnr ]; then
-  git clone https://github.com/YosysHQ/nextpnr.git               2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd nextpnr
-else
-  cd nextpnr
-  git fetch                                                      2>&1 | tee -a "$THIS_LOG"
-  git pull                                                       2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/YosysHQ/nextpnr.git nextpnr $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-  make clean                                                     2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG" "./CMakeFiles/CMakeOutput.log" "./CMakeFiles/CMakeError.log"
+cd nextpnr
+
+# optional clean
+if [ "$THIS_CLEAN" == "true" ]; then  
+  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+  make clean                                                       2>&1 | tee -a "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
 # Note the "DTRELLIS_INSTALL_PREFIX=/usr" value is the install directory, not git workspace clone directory
@@ -112,11 +117,16 @@ if [ $EXIT_STAT -ne 0 ];then
     while true; do
       echo "Do you wish to try to fix libQt5Core.so.5 with:"
       echo ""
-      echo "  strip --remove-section=.note.ABI-tag /usr/./lib/x86_64-linux-gnu/libQt5Core.so.5"
+      echo "  strip --remove-section=.note.ABI-tag ?"
       echo ""
       read -p "Try this?" yn
       case $yn in
-          [Yy]* ) echo "Fixing!"; sudo strip --remove-section=.note.ABI-tag /usr/./lib/x86_64-linux-gnu/libQt5Core.so.5; break;;
+          [Yy]* ) echo "Fixing!"
+                  echo "Searching for libQt5Core.so.5 in /usr/. ..."
+                  THIS_LIB=$(find /usr/. -name "libQt5Core.so.5")
+                  echo "Found: $THIS_LIB"
+                  sudo strip --remove-section=.note.ABI-tag "$THIS_LIB"
+                  break;;
           [Nn]* ) echo "Fix NOT applied."; break;;
           * ) echo "Please answer yes or no.";;
       esac

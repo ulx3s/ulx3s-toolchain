@@ -2,6 +2,12 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
+# ff78bd2f3
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -22,22 +28,10 @@ echo "**************************************************************************
 
 sudo apt-get install libftdi1-dev libusb-dev cmake make build-essential --assume-yes 2>&1 | tee -a "$THIS_LOG"
 
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/kost/fujprog.git fujprog $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-# NOTE: Although this successfully compiles, it does not seem to work in WSL (no USB device support, use EXE instead)
-if [ ! -d "$WORKSPACE"/fujprog ]; then
-  git clone https://github.com/kost/fujprog.git                  2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd fujprog
-else
-  cd fujprog
-  git fetch                                                      2>&1 | tee -a "$THIS_LOG"
-  git pull                                                       2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-
-  # there's currently no "make clean"
-  # make clean                                                     2>&1 | tee -a "$THIS_LOG"
-  # $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+cd fujprog
 
 # There's no point to making the linux version of fujprog in WSL, as native USB devices are not supported.
 # but we can compile the Windows version, amd actually call it from WSL (call from /mnt/c... not ~/...)

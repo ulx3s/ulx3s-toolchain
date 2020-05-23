@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -21,17 +26,19 @@ echo " icestorm. Saving log to: "$THIS_LOG
 echo "***************************************************************************************************"
 
 # see http://www.clifford.at/icestorm/
-if [ ! -d "$WORKSPACE"/icestorm ]; then
-  git clone https://github.com/cliffordwolf/icestorm.git icestorm 2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd icestorm
-else
-  cd icestorm
-  git fetch                                                       2>&1 | tee -a "$THIS_LOG"
-  git pull                                                        2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-  make clean                                                      2>&1 | tee -a "$THIS_LOG"
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/cliffordwolf/icestorm.git icestorm $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd icestorm
+
+# optional clean
+if [ "$THIS_CLEAN" == "true" ]; then  
+  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+  make clean                                                       2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
