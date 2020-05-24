@@ -81,7 +81,7 @@ Keep this in mind if your firewall or [dns blocker](https://pi-hole.net/) blocks
 
 ```
 cd ~
-wget https://raw.githubusercontent.com/ulx3s/ulx3s-toolchain/master/install.sh
+wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
 chmod +x install.sh
 ./install.sh barebones
 ```
@@ -93,7 +93,7 @@ Install everything:
 
 ```
 cd ~
-wget https://raw.githubusercontent.com/ulx3s/ulx3s-toolchain/master/install.sh
+wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
 chmod +x install.sh
 ./install.sh
 ```
@@ -103,7 +103,7 @@ or
 sudo apt-get install git --assume-yes
 mkdir -p ~/workspace
 cd ~/workspace
-git clone https://github.com/ulx3s/ulx3s-toolchain.git
+git clone https://github.com/gojimmypi/ulx3s-toolchain.git
 cd ulx3s-toolchain
 chmod +x ./install_all.sh
 ./install_all.sh
