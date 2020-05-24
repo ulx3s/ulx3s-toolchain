@@ -60,4 +60,4 @@ fi
 
 cd $SAVED_CURRENT_PATH
 
-echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+echo "Completed $0"                                                   | tee -a "$THIS_LOG"

@@ -33,3 +33,4 @@ pwd
 
 ./install_fujprog.sh
 
+echo "Done!"
