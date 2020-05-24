@@ -4,6 +4,8 @@
 #
 #  prompt install early on, rather than pausing for error hours later.
 #"***************************************************************************************************"
+echo "Checking for curl install..."
+sudo apt-get install curl --assume-yes
 
 THIS_CZ=$(curl --silent https://repo.or.cz/jimtcl.git/ | grep -m 1 .)
 if [ "$?" != "0" ] || [ "$THIS_CZ" == "" ] ; then
