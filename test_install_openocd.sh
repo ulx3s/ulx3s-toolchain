@@ -51,75 +51,8 @@ cd $SAVED_CURRENT_PATH
 # check to see if we can reach repo.or.cz now, rather than pause with error later
 ./check_cz.sh
 
-# system updates and dependencies
-./install_system.sh
 
-# set udev rules
-./install_udev_rules.sh
 
-# pre-compiled binaries
-./install_ulx3s-bin.sh
-
-# get dfu-util repo for reference, but install via apt-get
-./install_dfu-util.sh
-
-# ESP32
-./install_esp32.sh
 ./install_openocd-esp32.sh
 
-# RISC-V
-./install_riscv-gnu-toolchain-rv32i.sh
-./install_picorv32_riscv32i.sh
 ./install_openocd.sh
-
-# iverilog
-./install_iverilog.sh
-
-# verilator and icestorm (icestorm needs to be isntalled before necxtpnr-ice40)
-./install_verilator.sh
-./install_icestorm.sh
-
-# yosys / prjtrellis / nextpnr
-./install_yosys.sh
-./install_prjtrellis.sh
-./install_nextpnr.sh
-
-# litex
-./install_litex.sh
-
-# not maintained anymore, but arachne-pnr needs icestorm
-./install_arachne-pnr.sh
-
-# more examples and tools
-./install_rxrbln-picorv32.sh
-./install_ujprog.sh
-./install_fujprog.sh
-./install_blinky.sh
-./install_fpga_odysseus.sh
-
-./install_ulx3s.sh
-./install_ulx3s-misc.sh
-./install_ulx3s-examples.sh
-
-# run a synthesis
-./install_litex-ulx3s.sh
-
-echo "***************************************************************************************************"
-echo "update current system again. Saving log to $THIS_LOG"
-echo "***************************************************************************************************"
-sudo apt-get upgrade --assume-yes        2>&1 | tee -a "$THIS_LOG"
-
-if [ "$(sudo cat /etc/sudoers | grep timestamp_timeout)" != "" ]; then
-  echo ""
-  echo "WARNING: timestamp_timeout found in /etc/sudoers"
-  echo ""
-  echo "If you did this in order to install the toolchain unattended, consider removing it now with: sudo visudo"
-  echo ""
-fi
-
-echo ""
-echo "See logs in $LOG_DIRECTORY"
-echo ""
-
-
-echo "Completed $0 " | tee -a "$THIS_LOG"

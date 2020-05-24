@@ -1,4 +1,12 @@
 #!/bin/bash
+
+if [ "$THIS_SKIP_CZ" == "true" ]; then
+  echo ""
+  echo "Skipping install_openocd-esp32 since it needs access to https://repo.or.cz; THIS_SKIP_CZ=$THIS_SKIP_CZ"
+  echo ""
+  exit 0
+fi
+
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
