@@ -38,12 +38,12 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 cd openocd
 
 # optional clean
-if [ "$THIS_CLEAN" == "true" ]; then  
-  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
-  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
-  make clean                                                       2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+# if [ "$THIS_CLEAN" == "true" ]; then  
+#   echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+#   echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+#   make clean                                                       2>&1 | tee -a "$THIS_LOG"
+#   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+# fi
 
 echo "***************************************************************************************************"
 echo " openocd bootstrap. Saving log to $THIS_LOG"
