@@ -2,13 +2,17 @@
 
 ULX3S FPGA, RISC-V, ESP32 toolchain installer scripts. 
 
+This toolchain builder focuses on the ULX3S and Ubuntu (including WSL), but can easily be adapted to other platforms and target FPGA chips.
+
 The [ULX3S](https://radiona.org/ulx3s/) is now at [Crowd Supply](https://www.crowdsupply.com/radiona/ulx3s)!
 
 Run `install_all.sh` to install everything, or see each individual `install_[feature].sh` file.
 
-There's also a `./install.sh barebones` to install only the essentials for FPGA: verilator/yosys/nextpnr/fujprog.
+There's also a `./install.sh barebones` to install only the essentials for FPGA: verilator/yosys/nextpnr/fujprog. (useful for Visual Studio)
 
 For a quick start without compiling everything yourself, kost has some precompiled [binary releases](https://github.com/alpin3/ulx3s/releases).
+
+For Multi-platform nightly builds of open source FPGA tools, check out [fpga-toolchain](https://github.com/open-tool-forge/fpga-toolchain).
 
 ## Introduction
 
@@ -76,7 +80,8 @@ Keep this in mind if your firewall or [dns blocker](https://pi-hole.net/) blocks
 ### Quick Start, only the bare essentials:
 
 ```
-wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
+cd ~
+wget https://raw.githubusercontent.com/ulx3s/ulx3s-toolchain/master/install.sh
 chmod +x install.sh
 ./install.sh barebones
 ```
@@ -87,7 +92,8 @@ chmod +x install.sh
 Install everything:
 
 ```
-wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
+cd ~
+wget https://raw.githubusercontent.com/ulx3s/ulx3s-toolchain/master/install.sh
 chmod +x install.sh
 ./install.sh
 ```
@@ -97,7 +103,7 @@ or
 sudo apt-get install git --assume-yes
 mkdir -p ~/workspace
 cd ~/workspace
-git clone https://github.com/gojimmypi/ulx3s-toolchain.git
+git clone https://github.com/ulx3s/ulx3s-toolchain.git
 cd ulx3s-toolchain
 chmod +x ./install_all.sh
 ./install_all.sh
