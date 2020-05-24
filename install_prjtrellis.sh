@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -11,33 +16,41 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Install prjtrellis
 #"***************************************************************************************************"
+sudo apt-get install python3-dev clang cmake                     2>&1 | tee -a "$THIS_LOG"
+
 
 echo "***************************************************************************************************"
 echo " prjtrellis (required for nextpnr-ecp5). Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/prjtrellis ]; then
-  git clone --recursive https://github.com/SymbiFlow/prjtrellis
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd prjtrellis
-else
-  cd prjtrellis
-  git fetch                                                      2>&1 | tee -a "$THIS_LOG"
-  git pull                                                       2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/SymbiFlow/prjtrellis prjtrellis $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd prjtrellis
+
+source environment.sh
 
 # cmake must run from the libtrellis directory
 cd libtrellis
 
 # Makefile will not exist the very first time, so nothing to do
-if [ ! -f "Makefile" ]; then
-  echo "$0: File 'Makefile' not found. Not cleaning..."
-else
-  make clean                                                     2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+# optional clean
+if [ "$THIS_CLEAN" == "true" ]; then  
+  if [ ! -f "Makefile" ]; then
+    echo "$0: File 'Makefile' not found. Not cleaning... (probably a fresh git clone)"
+  else
+    echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+    echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+    make clean                                                     2>&1 | tee -a "$THIS_LOG"
+    $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+  fi
 fi
 
 cmake -DCMAKE_INSTALL_PREFIX=/usr .                              2>&1 | tee -a "$THIS_LOG"

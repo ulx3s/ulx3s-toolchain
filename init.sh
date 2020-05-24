@@ -18,18 +18,19 @@ else
 fi
 
 # active toolchain component developers may wish to set this to something other than the default.
-# avaoid spaces in the WORKSPACE path.
+# avoid spaces in the WORKSPACE path.
 if [ "$WORKSPACE" == "" ]; then
   if grep -q Microsoft /proc/version; then
     # Set default WSL location to C:\workspace
-    mkdir -p /mnt/c/workspace
     export WORKSPACE=/mnt/c/workspace # put your WSL linux path here. Placed outside of WSL file system for easy refresh
   else
     # Set Ubuntu location to home directory ~/workspace
-    mkdir -p ~/workspace
     export WORKSPACE=~/workspace  # put your pure linux workspace parent directory here.
   fi
 fi
+
+# ensure the directory exists
+mkdir -p $WORKSPACE
 
 # we will keep track of every install with suffixes YYYYMMSS_HHMMSS such as 20200307_105326
 export LOG_SUFFIX=$(date +"%Y%m%d_%H%M%S")

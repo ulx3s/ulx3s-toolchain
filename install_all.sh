@@ -2,6 +2,8 @@
 #"***************************************************************************************************"
 #  ensure all the scripts here are executable
 #"***************************************************************************************************"
+echo "setting permissions"
+pwd
 chmod +x install_set_permissions.sh
 ./install_set_permissions.sh
 
@@ -17,6 +19,7 @@ chmod +x install_set_permissions.sh
 # we don't want tee to capture exit codes
 set -o pipefail
 
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 #  check for minimum system resources needed (typically 40GB new Ubuntu VM with 5GB RAM)
 #"***************************************************************************************************"
@@ -66,14 +69,17 @@ cd $SAVED_CURRENT_PATH
 ./install_picorv32_riscv32i.sh
 ./install_openocd.sh
 
+# iverilog
+./install_iverilog.sh
+
+# verilator and icestorm (icestorm needs to be isntalled before necxtpnr-ice40)
+./install_verilator.sh
+./install_icestorm.sh
+
 # yosys / prjtrellis / nextpnr
 ./install_yosys.sh
 ./install_prjtrellis.sh
 ./install_nextpnr.sh
-
-# verilator and icestorm
-./install_verilator.sh
-./install_icestorm.sh
 
 # litex
 ./install_litex.sh
@@ -84,6 +90,7 @@ cd $SAVED_CURRENT_PATH
 # more examples and tools
 ./install_rxrbln-picorv32.sh
 ./install_ujprog.sh
+./install_fujprog.sh
 ./install_blinky.sh
 ./install_fpga_odysseus.sh
 

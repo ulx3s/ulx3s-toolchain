@@ -36,6 +36,7 @@ CheckForError() { # $1 expected to be error code via $?
 			echo "---------------------------"
 			grep -v " --disable-werror " "$5" | grep -B2 -i error
 		fi
+		echo ""
 		read -p "Error detected. Try updating dependencies. Press enter to continue, or Ctrl-C to abort."
 	else
 		echo "Ok! Exit code = [$1] using params=$params" 

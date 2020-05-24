@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -11,6 +16,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # fetch @DoctorWkt FPGA ULX3S-Blinky into workspace
 #"***************************************************************************************************"
@@ -18,16 +25,15 @@ set -o pipefail
 echo "***************************************************************************************************"
 echo "@DoctorWkt ULX3S-Blinky. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/ULX3S-Blinky ]; then
-  git clone --recursive https://github.com/DoctorWkt/ULX3S-Blinky 2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd ULX3S-Blinky
-else
-  cd ULX3S-Blinky
-  git fetch                                                       2>&1 | tee -a "$THIS_LOG"
-  git pull                                                        2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/DoctorWkt/ULX3S-Blinky ULX3S-Blinky $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd ULX3S-Blinky
+
+# TODO make?
 
 cd $SAVED_CURRENT_PATH
 

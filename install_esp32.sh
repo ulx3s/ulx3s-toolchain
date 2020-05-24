@@ -11,6 +11,8 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+# ensure we alwaye start from the $WORKSPACE directory
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # 
 # see https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html#get-started-get-esp-idf
@@ -18,15 +20,29 @@ set -o pipefail
 
 # the old idf needed these:
 sudo apt-get install libncurses-dev gawk gperf grep gettext python python-dev \
-     automake bison flex texinfo help2man libtool libtool-bin make --assume-yes   2>&1 | tee -a "$THIS_LOG"
+     automake bison flex texinfo help2man libtool libtool-bin make unzip --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
-sudo apt-get install python-pip                                    --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
 # the new idf needs theses:
 sudo apt-get install git wget flex bison gperf python python-pip python-setuptools \
      make ninja-build ccache libffi-dev libssl-dev                 --assume-yes   2>&1 | tee -a "$THIS_LOG"
 
 sudo apt-get install python3 python3-pip python3-setuptools        --assume-yes   2>&1 | tee -a "$THIS_LOG"
+
+# TODO - create this directory?
+#
+# Directory '/home/gojimmypi/src' does not exist.
+# [WARN ]  Will not save downloaded tarballs to local storage.
+
+# see https://github.com/ulx3s/ulx3s-toolchain/issues/5
+# see https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-setup.html#setting-up-python-3-as-default-for-ubuntu-and-debian
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+
+#if [ "$(lsb_release --release)" == "Release:        20.04" ]; then
+#  alias pip="pip3"
+#else
+#  sudo apt-get install python-pip                                    --assume-yes   2>&1 | tee -a "$THIS_LOG"
+#fi
 
 #  ensure our idf home diredtory exists
 mkdir -p ~/esp

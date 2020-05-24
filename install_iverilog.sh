@@ -19,21 +19,36 @@ set -o pipefail
 # ensure we alwaye start from the $WORKSPACE directory
 cd "$WORKSPACE"
 #"***************************************************************************************************"
-# fetch the advanced ULX3S examples into the workspace
+# icestorm
 #"***************************************************************************************************"
-
 echo "***************************************************************************************************"
-echo " emard's ulx3s-misc. Saving log to $THIS_LOG"
+echo " icestorm. Saving log to: "$THIS_LOG
 echo "***************************************************************************************************"
+sudo apt-get install autoconf gperf --assume-yes                  2>&1 | tee -a "$THIS_LOG"
 
 # Call the common github checkout:
 
-$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/emard/ulx3s-misc ulx3s-misc $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/steveicarus/iverilog.git iverilog $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-cd ulx3s-misc
+cd iverilog
 
-# TODO any checks?
+# optional clean
+#if [ "$THIS_CLEAN" == "true" ]; then  
+#  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+#  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+#  make clean                                                       2>&1 | tee -a "$THIS_LOG"
+#  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+#fi
+
+sh autoconf.sh                                                    2>&1 | tee -a "$THIS_LOG"
+./configure                                                       2>&1 | tee -a "$THIS_LOG"
+make                                                              2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+
+sudo make install                                                 2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 cd $SAVED_CURRENT_PATH
 

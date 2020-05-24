@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -11,23 +16,27 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
+cd "$WORKSPACE"
 #"***************************************************************************************************"
 # arachne-pnr
 #"***************************************************************************************************"
 echo "***************************************************************************************************"
 echo " arachne-pnr. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/arachne-pnr ]; then
-  git clone https://github.com/cseed/arachne-pnr.git arachne-pnr 2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd arachne-pnr
-else
-  cd arachne-pnr
-  git fetch                                                      2>&1 | tee -a "$THIS_LOG" 
-  git pull                                                       2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-  make clean                                                     2>&1 | tee -a "$THIS_LOG" 
+
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/cseed/arachne-pnr.git arachne-pnr $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd arachne-pnr
+
+# optional clean
+if [ "$THIS_CLEAN" == "true" ]; then  
+  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+  make clean                                                       2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
