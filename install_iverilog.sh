@@ -24,6 +24,7 @@ cd "$WORKSPACE"
 echo "***************************************************************************************************"
 echo " icestorm. Saving log to: "$THIS_LOG
 echo "***************************************************************************************************"
+
 sudo apt-get install autoconf gperf --assume-yes                  2>&1 | tee -a "$THIS_LOG"
 
 # Call the common github checkout:

@@ -3,10 +3,10 @@
 #  fetch_github.sh URL directoryName [hash]
 #"***************************************************************************************************"
 # when we get here, we are typically already in $WORKSPACE, ready to clone to a new directory
-
+#
 # perform some version control checks on this file
 # $SAVED_CURRENT_PATH/gitcheck.sh $0
-
+#
 # we don't want tee to capture exit codes
 set -o pipefail
 

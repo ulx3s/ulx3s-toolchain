@@ -20,7 +20,7 @@ set -o pipefail
 cd "$WORKSPACE"
 
 echo "***************************************************************************************************" | tee -a "$THIS_LOG"
-echo " Install TEMPLATE. Saving log to $THIS_LOG"                                                                  | tee -a "$THIS_LOG"
+echo " Install TEMPLATE. Saving log to $THIS_LOG"                                                          | tee -a "$THIS_LOG"
 echo "***************************************************************************************************" | tee -a "$THIS_LOG"
 
 # Call the common github checkout:
@@ -40,7 +40,7 @@ fi
 
 # optional WSL detection
 if grep -q ?Microsoft /proc/version; then
-  echo "WSL"
+  echo "WSL!"
 else
   echo "Non-WSL"
 fi

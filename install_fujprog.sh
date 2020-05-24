@@ -2,7 +2,7 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
-
+#
 # select master or some GitHub hash version, and whether or not to force a clean
 THIS_CHECKOUT=master
 THIS_CLEAN=true

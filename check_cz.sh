@@ -2,7 +2,7 @@
 #"***************************************************************************************************"
 #  check to see if we can reach https://repo.or.cz/jimtcl.git/ (used by OpenOCD; some firewalls may block this)
 #
-#  prompt install early on, rather than pausing for error hours later
+#  prompt install early on, rather than pausing for error hours later.
 #"***************************************************************************************************"
 
 THIS_CZ=$(curl --silent https://repo.or.cz/jimtcl.git/ | grep -m 1 .)

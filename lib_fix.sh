@@ -1,5 +1,7 @@
 #!/bin/bash
-
+#
+# prompt to fix libQt5Core.so.5
+# 
     while true; do
       echo "Do you wish to try to fix libQt5Core.so.5 with:"
       echo ""
