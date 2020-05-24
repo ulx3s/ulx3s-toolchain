@@ -3,12 +3,13 @@
 if [ "$THIS_SKIP_CZ" == "" ]; then 
   ./check_cz.sh
   if [ "$?" == "0" ]; then
-    export THIS_SKIP_CZ=false
+    export THIS_SKIP_CZ="false"
   else
-    export THIS_SKIP_CZ=true
+    export THIS_SKIP_CZ="true"
   fi
+  echo "$0 Set THIS_SKIP_CZ=$THIS_SKIP_CZ"
 else
-  echo "Found THIS_SKIP_CZ=$THIS_SKIP_CZ"
+  echo "$0 Found THIS_SKIP_CZ=$THIS_SKIP_CZ"
 fi
 
 if [ "$THIS_SKIP_CZ" == "true" ]; then

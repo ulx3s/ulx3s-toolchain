@@ -50,9 +50,21 @@ read -p "Press enter to continue, or Ctrl-C to abort."
 cd $SAVED_CURRENT_PATH
 
 # check to see if we can reach repo.or.cz now, rather than pause with error later
+echo ""
+echo "check cz!"
+echo ""
 ./check_cz.sh
-
-
+if [ "$THIS_SKIP_CZ" == "" ]; then 
+  ./check_cz.sh
+  if [ "$?" == "0" ]; then
+    export THIS_SKIP_CZ="false"
+  else
+    export THIS_SKIP_CZ="true"
+  fi
+  echo "Set THIS_SKIP_CZ=$THIS_SKIP_CZ"
+else
+  echo "Found THIS_SKIP_CZ=$THIS_SKIP_CZ"
+fi
 
 ./install_openocd-esp32.sh
 
