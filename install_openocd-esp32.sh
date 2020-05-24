@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -17,18 +22,33 @@ cd "$WORKSPACE"
 # Install OpenOCD for the ESP32
 #"***************************************************************************************************"
 
-echo "***************************************************************************************************"
-echo " openocd-esp32. Saving log to $THIS_LOG"
-echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/openocd-esp32 ]; then
-  git clone --recursive https://github.com/espressif/openocd-esp32    2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd openocd-esp32
-else
-  cd openocd-esp32
-  git fetch                                                       2>&1 | tee -a "$THIS_LOG"
-  git pull                                                        2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+echo "***************************************************************************************************" | tee -a "$THIS_LOG"
+echo " openocd-esp32. Saving log to $THIS_LOG"                                                             | tee -a "$THIS_LOG"
+echo "***************************************************************************************************" | tee -a "$THIS_LOG"
 
-echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+# Call the common github checkout:
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/espressif/openocd-esp32 openocd-esp32 $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+
+cd openocd-esp32
+
+# TODO is this installed to same location as regular openocd?
+
+echo ""                            | tee -a "$THIS_LOG"
+echo ""                            | tee -a "$THIS_LOG"
+./bootstrap                   2>&1 | tee -a "$THIS_LOG"
+
+echo ""                            | tee -a "$THIS_LOG"
+echo ""                            | tee -a "$THIS_LOG"
+./configure                   2>&1 | tee -a "$THIS_LOG"
+
+echo ""                            | tee -a "$THIS_LOG"
+echo "make"                        | tee -a "$THIS_LOG"
+make                          2>&1 | tee -a "$THIS_LOG"
+
+echo ""                            | tee -a "$THIS_LOG"
+echo "sudo make install"           | tee -a "$THIS_LOG"
+sudo make install             2>&1 | tee -a "$THIS_LOG"
+
+echo "Completed $0 "               | tee -a "$THIS_LOG"
