@@ -63,12 +63,12 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 cd nextpnr
 
 # optional clean
-if [ "$THIS_CLEAN" == "true" ]; then  
-  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
-  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
-  make clean                                                       2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+# if [ "$THIS_CLEAN" == "true" ]; then  
+#   echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+#   echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+#   make clean                                                       2>&1 | tee -a "$THIS_LOG"
+#   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+# fi
 
 # Note the "DTRELLIS_INSTALL_PREFIX=/usr" value is the install directory, not git workspace clone directory
 # If CMake fails, try rm CMakeCache.txt
