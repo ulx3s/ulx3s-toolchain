@@ -54,16 +54,10 @@ echo ""
 echo "check cz!"
 echo ""
 ./check_cz.sh
-if [ "$THIS_SKIP_CZ" == "" ]; then 
-  ./check_cz.sh
-  if [ "$?" == "0" ]; then
-    export THIS_SKIP_CZ="false"
-  else
-    export THIS_SKIP_CZ="true"
-  fi
-  echo "Set THIS_SKIP_CZ=$THIS_SKIP_CZ"
+if [ "$?" == "0" ]; then
+  export THIS_SKIP_CZ="false"
 else
-  echo "Found THIS_SKIP_CZ=$THIS_SKIP_CZ"
+  export THIS_SKIP_CZ="true"
 fi
 
 ./install_openocd-esp32.sh
