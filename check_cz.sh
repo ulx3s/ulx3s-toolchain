@@ -4,10 +4,10 @@
 #
 #  prompt install early on, rather than pausing for error hours later.
 #"***************************************************************************************************"
-echo "Checking for curl install..."
-sudo apt-get install curl --assume-yes
+echo "Checking for wget install..."
+sudo apt-get install wget --assume-yes
 
-THIS_CZ=$(curl --silent https://repo.or.cz/jimtcl.git/ | grep -m 1 .)
+THIS_CZ=$(wget --no-hsts --quiet --output-document=- https://repo.or.cz/jimtcl.git/ |  grep -m 1 .)
 if [ "$?" != "0" ] || [ "$THIS_CZ" == "" ] ; then
   echo ""
   echo "Warning! Unable to reach https://repo.or.cz (needed for OpenOCD)"
