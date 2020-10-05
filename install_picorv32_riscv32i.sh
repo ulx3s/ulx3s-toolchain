@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
