@@ -2,7 +2,7 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
-
+#
 # select master or some GitHub hash version, and whether or not to force a clean
 THIS_CHECKOUT=master
 THIS_CLEAN=true
@@ -40,7 +40,7 @@ if grep -q Microsoft /proc/version; then
   echo " ming32_64. Saving log to $THIS_LOG"
   echo "***************************************************************************************************"
 
-  # wget https://www.ftdichip.com/Drivers/CDM/CDM%20v2.12.28%20WHQL%20Certified.zip
+  wget --no-hsts https://www.ftdichip.com/Drivers/CDM/CDM%20v2.12.28%20WHQL%20Certified.zip
 
   mkdir -p build
   cd build
@@ -60,4 +60,4 @@ fi
 
 cd $SAVED_CURRENT_PATH
 
-echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+echo "Completed $0"                                                   | tee -a "$THIS_LOG"

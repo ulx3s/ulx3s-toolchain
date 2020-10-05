@@ -1,4 +1,11 @@
 #!/bin/bash
+
+cd /mnt/c/workspace/ulx3s-toolchain/ 
+
+export PATH=$PATH:/opt/riscv32i/bin
+
+# TODO why is this here:
+export WORKSPACE=/mnt/c/workspace
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"

@@ -39,14 +39,23 @@ if [ $(df $PWD | awk '/[0-9]%/{print $(NF-2)}' ) -lt "$MIN_ULX3S_DISK" ]; then
   read -p "Warning: At least $MIN_ULX3S_DISK bytes of free disk space is needed. Press a key to continue"
 fi
 
+cd $SAVED_CURRENT_PATH
+
+# check to see if we can reach repo.or.cz now, rather than pause with error later
+./check_cz.sh
+if [ "$?" == "0" ]; then
+  export THIS_SKIP_CZ="false"
+else
+  export THIS_SKIP_CZ="true"
+fi
+
+echo ""
 echo "Install all ULX3S toolchains. Edit parameters in init.sh"
 echo ""
 echo "logs saved to $LOG_DIRECTORY"
 echo ""
 echo ""
-read -p "Press enter to continue, or Ctrl-C to abort."
-
-cd $SAVED_CURRENT_PATH
+read -p "Press enter to continue and install everything, or Ctrl-C to abort."
 
 # system updates and dependencies
 ./install_system.sh

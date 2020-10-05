@@ -36,7 +36,7 @@ else
 
   cd ujprog
 
-  make clean                                                     2>&1 | tee -a "$THIS_LOG"
+  # make clean                                                     2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
@@ -50,7 +50,7 @@ if grep -q Microsoft /proc/version; then
   make -f Makefile.ming32_64                                     2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-  sudo make -f Makefile.ming32_64 install                        2>&1 | tee -a "$THIS_LOG"
+  # sudo make -f Makefile.ming32_64 install                        2>&1 | tee -a "$THIS_LOG"
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 else
   make -f Makefile.linux                                         2>&1 | tee -a "$THIS_LOG"
