@@ -40,7 +40,7 @@ if grep -q Microsoft /proc/version; then
   echo " ming32_64. Saving log to $THIS_LOG"
   echo "***************************************************************************************************"
 
-  # wget https://www.ftdichip.com/Drivers/CDM/CDM%20v2.12.28%20WHQL%20Certified.zip
+  wget --no-hsts https://www.ftdichip.com/Drivers/CDM/CDM%20v2.12.28%20WHQL%20Certified.zip
 
   mkdir -p build
   cd build
