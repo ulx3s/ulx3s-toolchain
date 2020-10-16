@@ -10,9 +10,6 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
-
 echo ""
 echo "fetch_github.sh working directory: $(pwd) with parameters:"
 echo ""

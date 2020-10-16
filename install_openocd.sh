@@ -36,8 +36,6 @@ THIS_CLEAN=true
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 #  Install openocd see https://github.com/ntfreak/openocd
 #
@@ -45,17 +43,22 @@ cd "$WORKSPACE"
 #"***************************************************************************************************"
 THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME"_openocd_"$LOG_SUFFIX".log"
 
-sudo apt-get install libtool automake pkg-config libusb-1.0-0-dev  --assume-yes   2>&1 | tee -a "$THIS_LOG"
+if [ "$APTGET" == 1 ]; then
+  sudo apt-get install libtool automake pkg-config libusb-1.0-0-dev  --assume-yes                  2>&1 | tee -a "$THIS_LOG"
+fi
 
 echo "***************************************************************************************************"
 echo " openocd. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 # Call the common github checkout:
 
-$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ntfreak/openocd.git openocd $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+pushd .
+cd "$WORKSPACE"
 
-cd openocd
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ntfreak/openocd.git openocd $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                                               $?          "$THIS_LOG"
+
+cd "$WORKSPACE"/openocd
 
 # optional clean
 # if [ "$THIS_CLEAN" == "true" ]; then  
@@ -72,25 +75,27 @@ echo "**************************************************************************
 # hack alert! bootstrap seems to always fail the first time, so we'll run it without saving to log :/
 ./bootstrap
 
-./bootstrap                                                       2>&1 | tee -a "$THIS_LOG"
+./bootstrap                                                                                        2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 echo "***************************************************************************************************"
 echo " openocd configure. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-./configure --enable-ftdi                                         2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+./configure --enable-ftdi                                                                          2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                                               $?          "$THIS_LOG"
 
 echo "***************************************************************************************************"
 echo " openocd make. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-make                                                              2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+make -j$(nproc)                                                                                    2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                                               $?          "$THIS_LOG"
 
 echo "***************************************************************************************************"
 echo " openocd make install. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 sudo make install                                                 2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                              $?          "$THIS_LOG"
 
+popd
 echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+echo "----------------------------------"

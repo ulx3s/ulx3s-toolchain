@@ -16,8 +16,6 @@ THIS_CLEAN=true
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # icestorm
 #"***************************************************************************************************"
@@ -25,14 +23,19 @@ echo "**************************************************************************
 echo " icestorm. Saving log to: "$THIS_LOG
 echo "***************************************************************************************************"
 
-sudo apt-get install autoconf gperf --assume-yes                  2>&1 | tee -a "$THIS_LOG"
+if [ "$APTGET" == 1 ]; then
+  sudo apt-get install autoconf gperf --assume-yes                  2>&1 | tee -a "$THIS_LOG"
+fi
 
 # Call the common github checkout:
+
+pushd .
+cd "$WORKSPACE"
 
 $SAVED_CURRENT_PATH/fetch_github.sh https://github.com/steveicarus/iverilog.git iverilog $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-cd iverilog
+cd "$WORKSPACE"/iverilog
 
 # optional clean
 #if [ "$THIS_CLEAN" == "true" ]; then  
@@ -44,13 +47,12 @@ cd iverilog
 
 sh autoconf.sh                                                    2>&1 | tee -a "$THIS_LOG"
 ./configure                                                       2>&1 | tee -a "$THIS_LOG"
-make                                                              2>&1 | tee -a "$THIS_LOG"
+make -j$(nproc)                                                   2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-
 
 sudo make install                                                 2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-cd $SAVED_CURRENT_PATH
-
+popd
 echo "Completed $0"                                                    | tee -a "$THIS_LOG"
+echo "----------------------------------"

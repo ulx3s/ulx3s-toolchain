@@ -16,8 +16,6 @@ THIS_CLEAN=true
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # icestorm
 #"***************************************************************************************************"
@@ -29,10 +27,13 @@ echo "**************************************************************************
 
 # Call the common github checkout:
 
-$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/cliffordwolf/icestorm.git icestorm $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+pushd .
+cd "$WORKSPACE"
 
-cd icestorm
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/cliffordwolf/icestorm.git icestorm $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                                                      $?          "$THIS_LOG"
+
+cd "$WORKSPACE"/icestorm
 
 # optional clean
 if [ "$THIS_CLEAN" == "true" ]; then  
@@ -42,12 +43,12 @@ if [ "$THIS_CLEAN" == "true" ]; then
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-make -j$(nproc)                                                   2>&1 | tee -a "$THIS_LOG"
+make -j$(nproc)                                                    2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-sudo make install                                                 2>&1 | tee -a "$THIS_LOG"
+sudo make install                                                  2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-cd $SAVED_CURRENT_PATH
-
-echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+popd
+echo "Completed $0 "                                                    | tee -a "$THIS_LOG"
+echo "----------------------------------"

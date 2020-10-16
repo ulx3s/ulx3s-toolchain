@@ -12,11 +12,9 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
-cd "$WORKSPACE"/ulx3s-toolchain
 echo "Barebone install!"
-pwd
 
-./install_set_permissions.sh
+./install_set_permissions.sh > /dev/null 2>&1
 
 # system updates and dependencies
 ./install_system.sh
@@ -25,6 +23,7 @@ pwd
 ./install_udev_rules.sh
 
 ./install_verilator.sh
+
 ./install_yosys.sh
 
 ./install_prjtrellis.sh
@@ -32,5 +31,3 @@ pwd
 ./install_nextpnr.sh ecp5
 
 ./install_fujprog.sh
-
-echo "Done!"

@@ -16,7 +16,6 @@ THIS_CLEAN=true
 # we don't want tee to capture exit codes
 set -o pipefail
 
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # arachne-pnr
 #"***************************************************************************************************"
@@ -24,13 +23,15 @@ echo "**************************************************************************
 echo " arachne-pnr. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 
-
 # Call the common github checkout:
 
-$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/cseed/arachne-pnr.git arachne-pnr $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+pushd .
+cd "$WORKSPACE"
 
-cd arachne-pnr
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/cseed/arachne-pnr.git arachne-pnr $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                                                     $?          "$THIS_LOG"
+
+cd "$WORKSPACE"/arachne-pnr
 
 # optional clean
 if [ "$THIS_CLEAN" == "true" ]; then  
@@ -40,12 +41,12 @@ if [ "$THIS_CLEAN" == "true" ]; then
   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 fi
 
-make                                                             2>&1 | tee -a "$THIS_LOG"
+make -j$(nproc)                                                   2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-sudo make install                                                2>&1 | tee -a "$THIS_LOG"
+sudo make install                                                 2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-cd $SAVED_CURRENT_PATH
-
-echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+popd
+echo "Completed $0 "                                                   | tee -a "$THIS_LOG"
+echo "----------------------------------"

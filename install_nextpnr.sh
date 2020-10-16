@@ -17,7 +17,6 @@ THIS_CLEAN=true
 set -o pipefail
 
 # ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Install nextpnr-ecp5
 #"***************************************************************************************************"
@@ -27,27 +26,13 @@ echo " nextpnr-ecp5. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
 # see https://github.com/YosysHQ/nextpnr#nextpnr-ecp5
 
-sudo apt-get install python3-pip --assume-yes    2>&1 | tee -a "$THIS_LOG"
-# pip3 install database 
-# sudo apt-get install libpython3-all-dev          2>&1 | tee -a "$THIS_LOG"
-
-# cd /usr
-# find . -name "Python.h"
-# ./include/python2.7/Python.h
-# ./include/python3.6m/Python.h
-# export PATH="/usr/include/python3.6m:$PATH"
-
-# pkg-config --cflags python
-
-
-# export PATH="/usr/include/python3.6m:$PATH"
-
-sudo apt-get install libboost-all-dev python3-dev qt5-default clang-format libeigen3-dev --assume-yes 2>&1 | tee -a "$THIS_LOG"
-
-# Is this one really needed?
-sudo apt-get install libboost-filesystem-dev libboost-thread-dev libboost-program-options-dev libboost-python-dev libboost-iostreams-dev libboost-dev  --assume-yes 2>&1 | tee -a "$THIS_LOG"
-
-sudo apt-get install cmake --assume-yes                          2>&1 | tee -a "$THIS_LOG"
+if [ "$APTGET" == 1 ]; then
+  sudo apt-get install python3-pip --assume-yes    2>&1 | tee -a "$THIS_LOG"
+  sudo apt-get install libboost-all-dev python3-dev qt5-default clang-format libeigen3-dev --assume-yes 2>&1 | tee -a "$THIS_LOG"
+  # Is this one really needed?
+  sudo apt-get install libboost-filesystem-dev libboost-thread-dev libboost-program-options-dev libboost-python-dev libboost-iostreams-dev libboost-dev  --assume-yes 2>&1 | tee -a "$THIS_LOG"
+  sudo apt-get install cmake --assume-yes                          2>&1 | tee -a "$THIS_LOG"
+fi
 
 THIS_ARCH=$1
 
@@ -55,12 +40,14 @@ if [ "$THIS_ARCH" == "" ]; then
   THIS_ARCH=ecp5
 fi
 
-# Call the common github checkout:
+pushd .
+cd "$WORKSPACE"
 
+# Call the common github checkout:
 $SAVED_CURRENT_PATH/fetch_github.sh https://github.com/YosysHQ/nextpnr.git nextpnr $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-cd nextpnr
+cd "$WORKSPACE"/nextpnr
 
 # optional clean
 # if [ "$THIS_CLEAN" == "true" ]; then  
@@ -81,8 +68,8 @@ cd nextpnr
 #
 # cmake -DARCH=$THIS_ARCH -DBUILD_PYTHON=OFF -DBUILD_GUI=OFF -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
 #
-cmake -DARCH=$THIS_ARCH  -DTRELLIS_INSTALL_PREFIX=/usr .           2>&1 | tee -a "$THIS_LOG"
 
+cmake -DARCH=$THIS_ARCH  -DTRELLIS_INSTALL_PREFIX=/usr .         2>&1 | tee -a "$THIS_LOG"
 echo This error: $?
 $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMakeFiles/CMakeError.log"
 
@@ -96,6 +83,7 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMak
 # to fix:
 # export PYTHONPATH="~/workspace/prjtrellis/database"
 # or check trellis params
+
 make -j$(nproc)                                                  2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "./CMakeFiles/CMakeOutput.log" "./CMakeFiles/CMakeError.log"
 
@@ -152,6 +140,6 @@ fi
 
 # sudo strip --remove-section=.note.ABI-tag /usr/./lib/x86_64-linux-gnu/libQt5Core.so.5
 
-cd $SAVED_CURRENT_PATH
-
+popd
 echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+echo "----------------------------------"

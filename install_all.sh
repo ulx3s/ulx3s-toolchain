@@ -3,9 +3,8 @@
 #  ensure all the scripts here are executable
 #"***************************************************************************************************"
 echo "setting permissions"
-pwd
 chmod +x install_set_permissions.sh
-./install_set_permissions.sh
+./install_set_permissions.sh  > /dev/null 2>&1
 
 #"***************************************************************************************************"
 #  common initialization
@@ -19,7 +18,6 @@ chmod +x install_set_permissions.sh
 # we don't want tee to capture exit codes
 set -o pipefail
 
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 #  check for minimum system resources needed (typically 40GB new Ubuntu VM with 5GB RAM)
 #"***************************************************************************************************"
@@ -38,8 +36,6 @@ if [ $(df $PWD | awk '/[0-9]%/{print $(NF-2)}' ) -lt "$MIN_ULX3S_DISK" ]; then
   echo ""
   read -p "Warning: At least $MIN_ULX3S_DISK bytes of free disk space is needed. Press a key to continue"
 fi
-
-cd $SAVED_CURRENT_PATH
 
 # check to see if we can reach repo.or.cz now, rather than pause with error later
 ./check_cz.sh
@@ -98,7 +94,7 @@ read -p "Press enter to continue and install everything, or Ctrl-C to abort."
 
 # more examples and tools
 ./install_rxrbln-picorv32.sh
-./install_ujprog.sh
+# ./install_ujprog.sh Deprecated? Won't install on Manjaro Linux (wrong hardcoded paths to libftdi and libusb).
 ./install_fujprog.sh
 ./install_blinky.sh
 ./install_fpga_odysseus.sh
@@ -110,10 +106,12 @@ read -p "Press enter to continue and install everything, or Ctrl-C to abort."
 # run a synthesis
 ./install_litex-ulx3s.sh
 
-echo "***************************************************************************************************"
-echo "update current system again. Saving log to $THIS_LOG"
-echo "***************************************************************************************************"
-sudo apt-get upgrade --assume-yes        2>&1 | tee -a "$THIS_LOG"
+if [ "$APTGET" == 1 ]; then
+  echo "***************************************************************************************************"
+  echo "update current system again. Saving log to $THIS_LOG"
+  echo "***************************************************************************************************"
+  sudo apt-get upgrade --assume-yes        2>&1 | tee -a "$THIS_LOG"
+fi
 
 if [ "$(sudo cat /etc/sudoers | grep timestamp_timeout)" != "" ]; then
   echo ""
@@ -126,6 +124,5 @@ fi
 echo ""
 echo "See logs in $LOG_DIRECTORY"
 echo ""
-
 
 echo "Completed $0 " | tee -a "$THIS_LOG"
