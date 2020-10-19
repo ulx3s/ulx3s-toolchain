@@ -37,8 +37,6 @@ THIS_CLEAN=true
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Install OpenOCD for the ESP32
 #"***************************************************************************************************"
@@ -49,10 +47,13 @@ echo "**************************************************************************
 
 # Call the common github checkout:
 
-$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/espressif/openocd-esp32 openocd-esp32 $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+pushd .
+cd "$WORKSPACE"
 
-cd openocd-esp32
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/espressif/openocd-esp32 openocd-esp32 $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                                                         $?          "$THIS_LOG"
+
+cd "$WORKSPACE"/openocd-esp32
 
 # TODO is this installed to same location as regular openocd?
 
@@ -66,10 +67,12 @@ echo ""                            | tee -a "$THIS_LOG"
 
 echo ""                            | tee -a "$THIS_LOG"
 echo "make"                        | tee -a "$THIS_LOG"
-make                          2>&1 | tee -a "$THIS_LOG"
+make -j$(nproc)               2>&1 | tee -a "$THIS_LOG"
 
 echo ""                            | tee -a "$THIS_LOG"
 echo "sudo make install"           | tee -a "$THIS_LOG"
 sudo make install             2>&1 | tee -a "$THIS_LOG"
 
+popd
 echo "Completed $0 "               | tee -a "$THIS_LOG"
+echo "----------------------------------"

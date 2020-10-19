@@ -16,8 +16,6 @@ THIS_CLEAN=true
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # install the dfu-util form from ulx3s. 
 #
@@ -33,25 +31,30 @@ echo "**************************************************************************
 
 # Call the common github checkout:
 
-$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ulx3s/dfu-util.git dfu-util $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+pushd .
+cd "$WORKSPACE"
 
-cd dfu-util
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ulx3s/dfu-util.git dfu-util $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                                               $?          "$THIS_LOG"
+
+cd "$WORKSPACE"/dfu-util
 
 # See INSTALL file for building
 
 # we'll install the apt-get version for now...
 dfu-util --version > /dev/null 2>&1
 if [ "$?" != "0" ]; then
-  echo "installing dfu-util ..."
-  sudo apt-get install dfu-util --assume-yes                        2>&1 | tee -a "$THIS_LOG"
+  if [ "$APTGET" == 1 ]; then
+    echo "installing dfu-util ..."
+    sudo apt-get install dfu-util --assume-yes                      2>&1 | tee -a "$THIS_LOG"
+  fi
 else
   echo "Skipping install of dfu-util. Already installed."           2>&1 | tee -a "$THIS_LOG"
 fi
 echo ""                                                             2>&1 | tee -a "$THIS_LOG"
 
 dfu-util --version                                                  2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                $?          "$THIS_LOG"
 
 # Generate build system files (requires autoconf from autotools)
 # ./autogen.sh
@@ -65,7 +68,6 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 # Install executables and manual pages (optional)
 # sudo make install
 
-
-cd $SAVED_CURRENT_PATH
-
-echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+popd
+echo "Completed $0 "                                                     | tee -a "$THIS_LOG"
+echo "----------------------------------"

@@ -10,7 +10,7 @@ export SAVED_CURRENT_PATH=$(pwd)
 if [ "$ULX3S_COM" == "" ]; then
   export ULX3S_COM=/dev/ttyS15  # put your device name here, or set in ~/.bashrc
   echo ""
-  echo "Warning: setting ULX3S_COM to $ULX3S_COM - consider setting in your .bashrc file."
+  echo "Warning: setting ULX3S_COM to $ULX3S_COM - consider setting ULX3S_COM in your .bashrc file."
   echo ""
   read -p "Press enter to continue, or Ctrl-C to abort."
 else
@@ -29,8 +29,9 @@ if [ "$WORKSPACE" == "" ]; then
   fi
 fi
 
-# ensure the directory exists
-mkdir -p $WORKSPACE
+# ensure the workspace directory exists
+mkdir -p "$WORKSPACE"
+mkdir -p "$WORKSPACE/install_logs"
 
 # we will keep track of every install with suffixes YYYYMMSS_HHMMSS such as 20200307_105326
 export LOG_SUFFIX=$(date +"%Y%m%d_%H%M%S")
@@ -54,9 +55,6 @@ fi
 # typicaly log file name looks like /mnt/c/workspace/install_logs/install_ujprog_20200307_105326.log
 export THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME""$THIS_DELIM""$THIS_PARAM_NAME""_""$LOG_SUFFIX".log"
 
-mkdir -p "$WORKSPACE"
-mkdir -p "$WORKSPACE/install_logs"
-
 #"***************************************************************************************************"
 # check that we are not running as root
 #"***************************************************************************************************"
@@ -70,6 +68,5 @@ else
   echo "Startup install with root permissions! (not a good idea) Security Context: $(whoami)" 2>&1 | tee -a  "$THIS_LOG"
 fi
 
-cd "$WORKSPACE"
 echo ""
-echo "Installing to $(pwd)"
+echo "Installing to $WORKSPACE"

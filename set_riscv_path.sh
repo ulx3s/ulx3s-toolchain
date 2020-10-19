@@ -24,5 +24,5 @@ if [ "$(echo $PATH | grep  $THIS_RISCV_PATH)" == "" ]; then
   export PATH=$PATH:$THIS_RISCV_PATH
   echo "Updated current path: $PATH"
 else
-  echo "Path not updated. PATH=$PATH"
+  echo "Path already correct. PATH=$PATH"
 fi

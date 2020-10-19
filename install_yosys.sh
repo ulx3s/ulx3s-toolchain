@@ -16,36 +16,27 @@ THIS_CLEAN=true
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # fetch and install yoysys
 #"***************************************************************************************************"
 
-sudo apt-get install build-essential clang bison flex \
-	libreadline-dev gawk tcl-dev libffi-dev git \
-	graphviz xdot pkg-config python3 libboost-system-dev \
-	libboost-python-dev libboost-filesystem-dev zlib1g-dev  --assume-yes   2>&1 | tee -a "$THIS_LOG"
+if [ "$APTGET" == 1 ]; then
+  sudo apt-get install build-essential clang bison flex \
+    libreadline-dev gawk tcl-dev libffi-dev git \
+    graphviz xdot pkg-config python3 libboost-system-dev \
+    libboost-python-dev libboost-filesystem-dev zlib1g-dev  --assume-yes   2>&1 | tee -a "$THIS_LOG"
+fi
 
-# see https://github.com/YosysHQ/nextpnr/issues/375 for 18.04
-# sudo strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
-
-# See https://github.com/microsoft/WSL/issues/3023#issuecomment-452281015
-
-# https://github.com/BVLC/caffe/issues/410#issuecomment-196546857
-# export CPLUS_INCLUDE_PATH=/usr/include/python2.7
+pushd .
+cd $WORKSPACE
 
 echo "***************************************************************************************************"
 echo " yosys. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-# see http://www.clifford.at/yosys/
-
-# Call the common github checkout:
-
 $SAVED_CURRENT_PATH/fetch_github.sh https://github.com/cliffordwolf/yosys.git yosys $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                              $?                            "$THIS_LOG"
 
-cd yosys
+cd "$WORKSPACE"/yosys
 
 # optional clean
 if [ "$THIS_CLEAN" == "true" ]; then  
@@ -57,7 +48,7 @@ fi
 
 echo ""                                                            2>&1 | tee -a "$THIS_LOG"
 echo "make"                                                        2>&1 | tee -a "$THIS_LOG"
-make                                                               2>&1 | tee -a "$THIS_LOG"
+make -j$(nproc)                                                    2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
 echo ""                                                            2>&1 | tee -a "$THIS_LOG"
@@ -65,10 +56,10 @@ echo "sudo make install"                                           2>&1 | tee -a
 sudo make install                                                  2>&1 | tee -a "$THIS_LOG"
 $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 
-cd $SAVED_CURRENT_PATH
+echo ""                                                                 | tee -a "$THIS_LOG"
+yosys --version                                                         | tee -a "$THIS_LOG"
+echo ""                                                                 | tee -a "$THIS_LOG"
 
-echo ""                                             | tee -a "$THIS_LOG"
-yosys --version                                     | tee -a "$THIS_LOG"
-echo ""                                             | tee -a "$THIS_LOG"
-
+popd
 echo "Completed $0 "                                                    | tee -a "$THIS_LOG"
+echo "----------------------------------"

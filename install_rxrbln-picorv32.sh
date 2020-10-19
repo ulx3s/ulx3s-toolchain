@@ -11,8 +11,6 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # Install the picorv32 from rxrbln that has some interesting ULX3S work
 #"***************************************************************************************************"
@@ -20,22 +18,24 @@ cd "$WORKSPACE"
 echo "***************************************************************************************************"
 echo "rxrbln's fork of picorv32 for the ULX3S. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
+
+pushd .
+cd "$WORKSPACE"
+
 if [ ! -d "$WORKSPACE"/rxrbln-picorv32 ]; then
   git clone --recursive https://github.com/rxrbln/picorv32 rxrbln-picorv32  2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh                                      $?          "$THIS_LOG"
   cd rxrbln-picorv32
 else
   cd rxrbln-picorv32
   git fetch                                                       2>&1 | tee -a "$THIS_LOG"
   git pull                                                        2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+  $SAVED_CURRENT_PATH/check_for_error.sh                            $?          "$THIS_LOG"
 fi
 
-make                                                              2>&1 | tee -a "$THIS_LOG"
-$SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+make -j$(nproc)                                                   2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                              $?          "$THIS_LOG"
 
-cd $SAVED_CURRENT_PATH
-
+popd
 echo "Completed $0 "                                                   | tee -a "$THIS_LOG"
-
-
+echo "----------------------------------"

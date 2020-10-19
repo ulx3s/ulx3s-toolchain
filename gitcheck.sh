@@ -39,7 +39,7 @@ CheckForGitFileChange() {
 	else 
 		echo "Warning! This version of $1 does not match the most recent version in GitHub!"
 		git status | tr -s ' ' | grep "modified: $1"
-		read -p "Press enter to continue, or Ctrl-C to abort. (manually push/pull recent file)"
+		# read -p "Press enter to continue, or Ctrl-C to abort. (manually push/pull recent file)"
 	fi
 	cd $SAVED_CURRENT_PATH
 }

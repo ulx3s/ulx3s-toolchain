@@ -23,7 +23,7 @@ set -o pipefail
 #"***************************************************************************************************"
 
 # make the soft CPU
-cd $WORKSPACE/litex-boards/litex_boards/targets
+cd "$WORKSPACE"/litex-boards/litex_boards/targets
 
 # $THIS_ULX3S_DEVICE contains a value such as LFE5U-85F
 ./ulx3s.py --device $THIS_ULX3S_DEVICE --cpu-type picorv32
@@ -38,7 +38,7 @@ echo "ULX3S BIOS:"
 ls $WORKSPACE/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/software/bios -al
 
 # put the soft CPU on the ULX3S
-cd $WORKSPACE/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/gateware
+cd "$WORKSPACE"/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/gateware
 $WORKSPACE/ulx3s-examples/bin/ujprog.exe top.bit
 
 # helpful notes from @GregDavill: (see https://twitter.com/gojimmypi/status/1241485830356496384?s=20)
@@ -55,7 +55,7 @@ $WORKSPACE/ulx3s-examples/bin/ujprog.exe top.bit
 # The bios exists to initialise things like SDRAM, which you can see it doing here. It then tries 
 # to load a USER program from SD/FLASH/Serial/Ethernet.
 
-cd $WORKSPACE/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/software/bios
+cd "$WORKSPACE"/litex-boards/litex_boards/targets/soc_basesoc_ulx3s/software/bios
 litex_term --serial-boot --kernel bios.bin /dev/ttyS15
 
 # press enter to confirm LiteX prompt, then type "reboot" (without quotes, then enter )
