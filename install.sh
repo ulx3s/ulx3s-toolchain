@@ -81,6 +81,8 @@ if [ ! -d "$WORKSPACE"/ulx3s-toolchain ]; then
 else
 
   # ulx3s-toolchain directory found
+  cd "$WORKSPACE"/ulx3s-toolchain
+
   chmod +x install_set_permissions.sh
   chmod +x dos2unix.sh
 
